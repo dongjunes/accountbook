@@ -6,12 +6,33 @@ import java.io.Serializable;
  * Created by dongjune on 2017-04-20.
  */
 
-public class UserVo implements Serializable{
+public class UserVo implements Serializable {
     private String id;
     private String name;
+    private String password;
     private String email;
     private String gender;
-    private String age_range;
+    private String age;
+
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age_range='" + age + '\'' +
+                '}';
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getId() {
         return id;
@@ -45,22 +66,12 @@ public class UserVo implements Serializable{
         this.gender = gender;
     }
 
-    public String getAge_range() {
-        return age_range;
+    public String getAge() {
+        return age;
     }
 
-    public void setAge_range(String age_range) {
-        this.age_range = age_range;
+    public void setAge(String age_range) {
+        this.age = age_range;
     }
 
-    @Override
-    public String toString() {
-        return "UserVo{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", age_range='" + age_range + '\'' +
-                '}';
-    }
 }

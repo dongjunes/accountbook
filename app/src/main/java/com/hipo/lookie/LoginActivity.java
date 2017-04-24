@@ -57,9 +57,10 @@ public class LoginActivity extends Activity {
                             try {
                                 vo.setId(object.get("id") + "");
                                 vo.setName(object.get("name") + "");
+                                vo.setPassword(vo.getId());
                                 vo.setEmail(object.get("email") + "");
                                 vo.setGender(object.get("gender") + "");
-                                vo.setAge_range(object.getJSONObject("age_range").get("max") + "");
+                                vo.setAge(object.getJSONObject("age_range").get("max") + "");
                                 Log.d("userVo", vo.toString());
                             } catch (JSONException e) {
 

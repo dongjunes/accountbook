@@ -1,6 +1,8 @@
 package com.hipo.lookie;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -43,16 +50,84 @@ public class TabbedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
-        UserVo vo=null;
+        UserVo vo = null;
         Intent i = getIntent();
         if (i.getBooleanExtra("loginDone", false)) {
             String userId = i.getStringExtra("userId");
             Log.d("로그인된상태", userId);
+            NetworkTask2 task2 = new NetworkTask2(userId, 2);
+            Map<String, String> params = new HashMap<String, String>();
+            task2.execute(params);
         } else {
             vo = (UserVo) getIntent().getSerializableExtra("userVo");
             Log.d("로그인 안된상태", vo.toString());
+
+            NetworkTask2 task2 = new NetworkTask2(vo.getId(), 1);
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("id", vo.getId());
+            params.put("gender", vo.getGender());
+            params.put("name", vo.getName());
+            params.put("email", vo.getEmail());
+            params.put("password", vo.getPassword());
+            params.put("age", vo.getAge());
+
+            task2.execute(params);
         }
         init();
+
+
+    }
+
+    public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String> {
+        private String id;
+        private int receive = 0;
+
+        public NetworkTask2(String id, int receive) {
+            this.id = id;
+            this.receive = receive;
+        }
+
+        @Override
+        protected String doInBackground(Map<String, String>... maps) { // 내가 전송하고 싶은 파라미터
+
+// Http 요청 준비 작업
+            HttpClient.Builder http;
+            if (receive == 1) {
+                http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/join");
+
+            } else {
+                http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/login");
+            }
+// Parameter 를 전송한다.
+            http.addAllParameters(maps[0]);
+
+
+//Http 요청 전송
+            HttpClient post = http.create();
+            post.request();
+
+// 응답 상태코드 가져오기
+            int statusCode = post.getHttpStatusCode();
+
+// 응답 본문 가져오기
+            String body = post.getBody();
+
+            return body;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (receive == 1) {
+
+            } else {
+                Log.d("ReceiveDataPOST", s);
+                Gson gson = new Gson();
+                UserVo vo = gson.fromJson(s, UserVo.class);
+                Log.d("proceesedUserVo", vo.toString());
+
+
+            }
+        }
     }
 
     private void init() {
