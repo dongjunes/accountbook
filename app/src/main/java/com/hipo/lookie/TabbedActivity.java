@@ -2,10 +2,6 @@ package com.hipo.lookie;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,20 +12,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TabbedActivity extends AppCompatActivity {
+public class TabbedActivity extends AppCompatActivity implements ListDataCallback {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -45,6 +34,7 @@ public class TabbedActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private NetworkTask2 task2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +45,21 @@ public class TabbedActivity extends AppCompatActivity {
         if (i.getBooleanExtra("loginDone", false)) {
             String userId = i.getStringExtra("userId");
             Log.d("로그인된상태", userId);
-            NetworkTask2 task2 = new NetworkTask2(userId, 2);
+            task2 = new NetworkTask2(userId, 2);
             Map<String, String> params = new HashMap<String, String>();
-            task2.execute(params);
+            try {
+                String result = task2.execute(params).get();
+                Gson gson = new Gson();
+                vo = gson.fromJson(result, UserVo.class);
+                Log.d("vovovo", vo.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             vo = (UserVo) getIntent().getSerializableExtra("userVo");
             Log.d("로그인 안된상태", vo.toString());
 
-            NetworkTask2 task2 = new NetworkTask2(vo.getId(), 1);
+            task2 = new NetworkTask2(vo.getId(), 1);
             Map<String, String> params = new HashMap<String, String>();
             params.put("id", vo.getId());
             params.put("gender", vo.getGender());
@@ -73,14 +70,19 @@ public class TabbedActivity extends AppCompatActivity {
 
             task2.execute(params);
         }
-        init();
+        init(vo);
 
+    }
 
+    @Override
+    public void test(int i) {
+        Log.d("testCallback", i + "");
     }
 
     public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String> {
         private String id;
         private int receive = 0;
+        private UserVo userVo = null;
 
         public NetworkTask2(String id, int receive) {
             this.id = id;
@@ -121,22 +123,18 @@ public class TabbedActivity extends AppCompatActivity {
 
             } else {
                 Log.d("ReceiveDataPOST", s);
-                Gson gson = new Gson();
-                UserVo vo = gson.fromJson(s, UserVo.class);
-                Log.d("proceesedUserVo", vo.toString());
-
-
             }
         }
+
     }
 
-    private void init() {
+    private void init(UserVo vo) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), vo);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -152,8 +150,11 @@ public class TabbedActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private UserVo vo;
+
+        public SectionsPagerAdapter(FragmentManager fm, UserVo vo) {
             super(fm);
+            this.vo = vo;
         }
 
         @Override
@@ -162,7 +163,7 @@ public class TabbedActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return ListFragment.newInstance(position + 1);
+                    return ListFragment.newInstance(position + 1, vo);
                 case 1:
                     return MapFragment.newInstance(position + 2);
                 case 2:
