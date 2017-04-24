@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.hipo.lookie.ListDataCallback;
+import com.hipo.lookie.R;
+import com.hipo.vo.UserVo;
 
 /**
  * Created by dongjune on 2017-04-20.

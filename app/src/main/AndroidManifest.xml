@@ -16,7 +16,7 @@
             android:value="@string/facebook_app_id" />
         <!-- splash -->
         <activity
-            android:name=".SplashActivity"
+            android:name="com.hipo.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
@@ -28,7 +28,7 @@
         </activity>
         <!-- splash -->
 
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.hipo.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -39,13 +39,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TabbedActivity"
+            android:name="com.hipo.activity.TabbedActivity"
             android:label="@string/title_activity_tabbed"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName="com.hipo.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hipo.lookie.LoginActivity" />
+                android:value="com.hipo.lookie.com.hipo.activity.LoginActivity" />
         </activity>
     </application>
 

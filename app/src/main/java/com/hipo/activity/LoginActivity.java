@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.hipo.lookie.R;
+import com.hipo.vo.UserVo;
 
 import org.json.JSONException;
 import org.json.JSONObject;

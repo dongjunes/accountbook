@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.fragment;
 
 
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
+import com.hipo.activity.LoginActivity;
+import com.hipo.lookie.R;
 
 
 /**

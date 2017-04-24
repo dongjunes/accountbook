@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.vo;
 
 import java.io.Serializable;
 

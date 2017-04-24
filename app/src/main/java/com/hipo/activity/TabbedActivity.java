@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +14,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.hipo.fragment.ChartFragment;
+import com.hipo.fragment.ListFragment;
+import com.hipo.fragment.MapFragment;
+import com.hipo.fragment.SettingFragment;
+import com.hipo.lookie.HttpClient;
+import com.hipo.lookie.ListDataCallback;
+import com.hipo.lookie.R;
+import com.hipo.vo.UserVo;
 
 import java.util.HashMap;
 import java.util.Map;
