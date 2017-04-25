@@ -1,4 +1,4 @@
-package com.hipo.vo;
+package com.hipo.model.pojo;
 
 import java.io.Serializable;
 

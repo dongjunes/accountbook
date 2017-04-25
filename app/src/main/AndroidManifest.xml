@@ -3,6 +3,8 @@
     package="com.hipo.lookie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,7 @@
             android:value="@string/facebook_app_id" />
         <!-- splash -->
         <activity
-            android:name="com.hipo.activity.SplashActivity"
+            android:name="com.hipo.component.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
@@ -28,7 +30,7 @@
         </activity>
         <!-- splash -->
 
-        <activity android:name="com.hipo.activity.LoginActivity">
+        <activity android:name="com.hipo.component.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -39,14 +41,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hipo.activity.TabbedActivity"
+            android:name="com.hipo.component.activity.TabbedActivity"
             android:label="@string/title_activity_tabbed"
-            android:parentActivityName="com.hipo.activity.LoginActivity"
+            android:parentActivityName="com.hipo.component.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hipo.lookie.com.hipo.activity.LoginActivity" />
+                android:value="com.hipo.component.activity.LoginActivity" />
         </activity>
+
+        <receiver
+            android:name="com.hipo.component.receiver.BroadCast"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.hipo.component.service.MyService" />
     </application>
 
 </manifest>

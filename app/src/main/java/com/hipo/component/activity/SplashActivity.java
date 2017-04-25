@@ -1,4 +1,4 @@
-package com.hipo.activity;
+package com.hipo.component.activity;
 
 import android.app.Activity;
 import android.content.Intent;

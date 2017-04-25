@@ -1,6 +1,7 @@
 package com.hipo.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,9 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
-import com.hipo.activity.LoginActivity;
+import com.hipo.callback.SettingDataCallback;
+import com.hipo.component.activity.LoginActivity;
+import com.hipo.component.service.MyService;
 import com.hipo.lookie.R;
 
 
@@ -20,7 +23,7 @@ import com.hipo.lookie.R;
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends Fragment {
-
+    private SettingDataCallback callback;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -38,6 +41,12 @@ public class SettingFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        callback=(SettingDataCallback)activity;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = null;
         view = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -49,6 +58,7 @@ public class SettingFragment extends Fragment {
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 AccessToken.setCurrentAccessToken(null);
                 startActivity(i);
+                callback.stopService();
                 Toast.makeText(getContext(), "다시 로그인해주세요", Toast.LENGTH_SHORT);
                 getActivity().finish();
             }

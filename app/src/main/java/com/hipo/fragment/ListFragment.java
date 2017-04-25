@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hipo.lookie.ListDataCallback;
+import com.hipo.callback.ListDataCallback;
 import com.hipo.lookie.R;
-import com.hipo.vo.UserVo;
+import com.hipo.model.pojo.UserVo;
 
 /**
  * Created by dongjune on 2017-04-20.
@@ -37,7 +36,7 @@ public class ListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_list, container, false);
         Bundle b = getArguments();
         UserVo vo = (UserVo) b.getSerializable("UserVo");
-        Log.d("도착지UserVo", vo.toString());
+//        Log.d("도착지UserVo", vo.toString());
         dataCallback.test(1);
         return view;
     }

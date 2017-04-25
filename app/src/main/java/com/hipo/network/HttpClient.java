@@ -1,4 +1,4 @@
-package com.hipo.lookie;
+package com.hipo.network;
 
 /**
  * Created by dongjune on 2017-04-21.
