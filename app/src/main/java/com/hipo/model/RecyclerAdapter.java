@@ -99,7 +99,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public String[] main3(String data) {
         String date[] = new String[2];
-        System.out.println("data : " + data);
         Pattern p = null;
         Matcher m;
         for (int i = 0; i < date.length; i++) {
