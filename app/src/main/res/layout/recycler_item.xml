@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="100dip"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="100dip"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ymtxt"
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:gravity="center"
+                android:text="17.04"
+                android:textColor="#200000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/dtxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center"
+                android:text="30"
+                android:textColor="#000000"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="30dip"
+                android:gravity="center"
+                android:text="생활비"
+                android:textColor="#200000"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="270dip"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="180dip"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dip"
+                    android:gravity="bottom"
+                    android:textColor="#200000"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/paid"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:text="생활비"
+                    android:textColor="#200000"
+                    android:textSize="15sp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/money"
+                android:layout_width="match_parent"
+                android:layout_height="100dip"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="money"
+                android:textColor="#200000"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
