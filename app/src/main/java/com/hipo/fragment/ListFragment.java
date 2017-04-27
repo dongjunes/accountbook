@@ -3,14 +3,26 @@ package com.hipo.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hipo.callback.ListDataCallback;
 import com.hipo.lookie.R;
+import com.hipo.model.RecyclerAdapter;
+import com.hipo.model.pojo.ListVo;
 import com.hipo.model.pojo.UserVo;
+import com.hipo.utils.GetListDataThread;
+
+import java.util.List;
 
 /**
  * Created by dongjune on 2017-04-20.
@@ -19,6 +31,8 @@ import com.hipo.model.pojo.UserVo;
 public class ListFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ListDataCallback dataCallback;
+    private RecyclerView recyclerView = null;
+    private Handler handler;
 
     public static ListFragment newInstance(int sectionNumber, UserVo vo) {
         ListFragment fragment = new ListFragment();
@@ -30,6 +44,7 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = null;
@@ -37,6 +52,19 @@ public class ListFragment extends Fragment {
         Bundle b = getArguments();
         UserVo vo = (UserVo) b.getSerializable("UserVo");
 //        Log.d("도착지UserVo", vo.toString());
+        init(view);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                List<ListVo> list = (List<ListVo>) msg.obj;
+                Log.d("List!!List", list.toString());
+                recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item));
+            }
+        };
+        GetListDataThread listThread = new GetListDataThread(handler, vo.getId());
+        listThread.start();
         dataCallback.test(1);
         return view;
     }
@@ -47,8 +75,12 @@ public class ListFragment extends Fragment {
         dataCallback = (ListDataCallback) activity;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void init(View v) {
+        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
     }
+
 }

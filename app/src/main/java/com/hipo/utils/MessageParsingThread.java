@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
  * Created by dongjune on 2017-04-07.
  */
 
-public class DataThread extends Thread {
+public class MessageParsingThread extends Thread {
 
     private Handler handler;
     private String data;
 
-    public DataThread(Handler handler, String data) {
+    public MessageParsingThread(Handler handler, String data) {
         this.handler = handler;
         this.data = data;
     }

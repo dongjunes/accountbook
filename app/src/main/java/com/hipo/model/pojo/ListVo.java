@@ -6,7 +6,7 @@ public class ListVo {
 	private String paid;
 	private String bank;
 	private String operations;
-	private int money;
+	private String money;
 	private String name;
 	private String category;
 	private String day;
@@ -50,10 +50,10 @@ public class ListVo {
 	public void setOperations(String operations) {
 		this.operations = operations;
 	}
-	public int getMoney() {
+	public String getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
+	public void setMoney(String money) {
 		this.money = money;
 	}
 	public String getName() {

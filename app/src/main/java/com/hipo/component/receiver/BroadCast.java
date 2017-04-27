@@ -11,8 +11,9 @@ import android.util.Log;
 
 import com.hipo.component.service.MyService;
 import com.hipo.model.NetworkTask2;
+import com.hipo.model.pojo.ListVo;
 import com.hipo.model.pojo.UserVo;
-import com.hipo.utils.DataThread;
+import com.hipo.utils.MessageParsingThread;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -24,10 +25,11 @@ import java.util.Map;
 
 public class BroadCast extends BroadcastReceiver {
     private Handler handler;
-    private UserVo vo;
+    private UserVo userVo;
+    private ListVo listVo;
 
     public BroadCast(UserVo vo) {
-        this.vo = vo;
+        this.userVo = vo;
     }
 
     @Override
@@ -46,19 +48,12 @@ public class BroadCast extends BroadcastReceiver {
                     for (int i = 0; i < arr.length; i++) {
                         Log.d("BroadCast 확인중" + i, arr[i]);
                     }
-                    Log.d("CastReceiver", vo.toString());
-                    NetworkTask2 task2 = new NetworkTask2(vo.getId(), 3);
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("id",vo.getId());
-                    params.put("bank", arr[0]);
-                    params.put("price", arr[1]);
-                    params.put("date", arr[2]);
-                    params.put("place", arr[3]);
-                    task2.execute(params);
+                    sharingServer(arr);
                 }
             };
-            DataThread dataThread = new DataThread(handler, message);
+            MessageParsingThread dataThread = new MessageParsingThread(handler, message);
             dataThread.start();
+
         }
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
             Log.d("BroadCast", "전원이 켜졌습니다.");
@@ -87,5 +82,19 @@ public class BroadCast extends BroadcastReceiver {
         Log.d("receive meesage", message);
 
         return message;
+    }
+
+    private void sharingServer(String arr[]) {
+        NetworkTask2 task2 = new NetworkTask2(userVo.getId(), 3);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", userVo.getId());
+        params.put("bank", arr[0]);
+        params.put("price", arr[1]);
+        params.put("date", arr[2]);
+        params.put("place", arr[3]);
+        params.put("paid", "카드");
+        params.put("category", "생활비");
+        params.put("operations", "-");
+        task2.execute(params);
     }
 }

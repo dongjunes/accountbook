@@ -32,6 +32,8 @@ public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/join");
         } else if (receive == 3) {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/addList");
+        }else if(receive==4){
+            http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/getList");
         } else {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/login");
         }
