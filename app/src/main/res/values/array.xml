@@ -5,5 +5,13 @@
         <item>높은금액순</item>
         <item>낮은금액순</item>
     </string-array>
-
+    <string-array name="paid_spinner">
+        <item>현금</item>
+        <item>카드</item>
+        <item>기타</item>
+    </string-array>
+    <string-array name="category_list">
+        <item>생활비</item>
+        <item>기타</item>
+    </string-array>
 </resources>

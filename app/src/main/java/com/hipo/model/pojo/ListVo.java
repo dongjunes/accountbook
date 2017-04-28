@@ -1,10 +1,11 @@
 package com.hipo.model.pojo;
 
+import java.io.Serializable;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ListVo {
+public class ListVo implements Serializable {
     private String listId;
     private String id;
     private String paid;
@@ -16,13 +17,53 @@ public class ListVo {
     private String day;
     private String locationX;
     private String locationY;
-
+    private String date_ym;
+    private String date_day;
+    private String time;
 
     @Override
     public String toString() {
-        return "ListVo [listId=" + listId + ", id=" + id + ", paid=" + paid + ", bank=" + bank + ", operations="
-                + operations + ", money=" + money + ", name=" + name + ", category=" + category + ", locationX="
-                + locationX + ", locationY=" + locationY + ", day=" + day + "]";
+        return "ListVo{" +
+                "listId='" + listId + '\'' +
+                ", id='" + id + '\'' +
+                ", paid='" + paid + '\'' +
+                ", bank='" + bank + '\'' +
+                ", operations='" + operations + '\'' +
+                ", money='" + money + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", day='" + day + '\'' +
+                ", locationX='" + locationX + '\'' +
+                ", locationY='" + locationY + '\'' +
+                ", date_ym='" + date_ym + '\'' +
+                ", date_day='" + date_day + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
+
+    public String getDate_ym() {
+        return date_ym;
+    }
+
+    public void setDate_ym(String date_ym) {
+        this.date_ym = date_ym;
+    }
+
+
+    public String getDate_day() {
+        return date_day;
+    }
+
+    public void setDate_day(String date_day) {
+        this.date_day = date_day;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getListId() {

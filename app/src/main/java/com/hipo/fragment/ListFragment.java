@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.hipo.callback.ListDataCallback;
+import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
 import com.hipo.model.RecyclerAdapter;
 import com.hipo.model.pojo.ListVo;
@@ -23,6 +25,7 @@ import com.hipo.model.pojo.UserVo;
 import com.hipo.utils.GetListDataThread;
 import com.hipo.utils.SortingThread;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -36,6 +39,7 @@ public class ListFragment extends Fragment {
     private Spinner spinner;
     private Handler listHandler, sortHandler;
     private SortingThread sort;
+    private ShareEventAdapterToFragment shareEvent;
 
     public static ListFragment newInstance(int sectionNumber, UserVo vo) {
         ListFragment fragment = new ListFragment();
@@ -56,14 +60,25 @@ public class ListFragment extends Fragment {
         UserVo vo = (UserVo) b.getSerializable("UserVo");
 //        Log.d("도착지UserVo", vo.toString());
         init(view);
+        shareEvent = new ShareEventAdapterToFragment() {
+            @Override
+            public void event(View v, ListVo vo) {
+                MyDialogFragment dialogFragment = new MyDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("listVo", vo);
+                dialogFragment.setArguments(bundle);
+                FragmentManager fm = getFragmentManager();
+                dialogFragment.show(fm,"tags");
 
+            }
+        };
         listHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 List<ListVo> list = (List<ListVo>) msg.obj;
                 Log.d("List!!List", list.toString());
-                recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item));
+                recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item, shareEvent));
                 setSpinnerEvent(list);
             }
         };
@@ -96,17 +111,27 @@ public class ListFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
+                        recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item, shareEvent));
                         break;
                     case 1:
-
-                        break;
-                    case 2:
-                        sortHandler=new Handler(){
+                        sortHandler = new Handler() {
                             @Override
                             public void handleMessage(Message msg) {
                                 super.handleMessage(msg);
-                                final List<ListVo> listVo=(List<ListVo>)msg.obj;
-                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), listVo, R.layout.recycler_item));
+                                final List<ListVo> listVo = (List<ListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), listVo, R.layout.recycler_item, shareEvent));
+                            }
+                        };
+                        sort = new SortingThread(1, list, sortHandler);
+                        sort.start();
+                        break;
+                    case 2:
+                        sortHandler = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                final List<ListVo> listVo = (List<ListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), listVo, R.layout.recycler_item, shareEvent));
                             }
                         };
                         sort = new SortingThread(2, list, sortHandler);

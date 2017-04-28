@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -34,7 +34,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -50,4 +50,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.google.code.gson:gson:2.7'
+}
+dependencies {
+    compile 'com.android.support:support-v4:25.+'
+}
+dependencies {
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }

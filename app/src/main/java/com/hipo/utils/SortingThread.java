@@ -32,22 +32,18 @@ public class SortingThread extends Thread {
         for (int i = 0; i < arr.length; i++) {
             Log.d("잘변햇니?", arr[i].toString());
         }
-        if (div == 2) {
-            Heap h = new Heap(arr.length);
-            for (int i = 0; i < arr.length; i++) {
-                h.insert(arr[i]);
-            }
-
-            List<ListVo> list = new ArrayList<>();
-
-            for (int i = 0; i < arr.length; i++) {
-                list.add(h.delete());
-                Log.d("list",list.get(i).toString());
-            }
-            putHandler(list);
-
+        Heap h = new Heap(arr.length, div);
+        for (int i = 0; i < arr.length; i++) {
+            h.insert(arr[i]);
         }
 
+        List<ListVo> list = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            list.add(h.delete());
+            Log.d("list", list.get(i).toString());
+        }
+        putHandler(list);
     }
 
     private void putHandler(List<ListVo> vo) {

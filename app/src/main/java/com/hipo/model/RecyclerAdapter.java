@@ -2,15 +2,15 @@ package com.hipo.model;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
 import com.hipo.model.pojo.ListVo;
 
@@ -26,11 +26,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private Context context;
     private List<ListVo> list;
     private int itemLayout;
+    private FragmentManager fm;
+    private ShareEventAdapterToFragment shareEvent;
 
-    public RecyclerAdapter(Context context, List<ListVo> list, int itemLayout) {
+    public RecyclerAdapter(Context context, List<ListVo> list, int itemLayout, ShareEventAdapterToFragment shareEvent) {
         this.context = context;
         this.list = list;
         this.itemLayout = itemLayout;
+        this.shareEvent = shareEvent;
     }
 
     @Override
@@ -41,10 +44,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final ListVo listVo = list.get(position);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        ListVo listVo = list.get(position);
         String date = listVo.getDay();
-        String times[] = main3(date);
+        String times[] = parsingDate(date, listVo);
         holder.ymText.setText(times[0]);
         holder.dText.setText(times[1]);
         holder.moneyText.setText(listVo.getMoney());
@@ -59,7 +62,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Clicke","CCC");
+                shareEvent.event(v, list.get(position));
             }
         });
 
@@ -97,8 +100,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    public String[] main3(String data) {
-        String date[] = new String[2];
+    public String[] parsingDate(String data, ListVo listVo) {
+        String date[] = new String[3];
         Pattern p = null;
         Matcher m;
         for (int i = 0; i < date.length; i++) {
@@ -109,13 +112,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 case 1:
                     p = Pattern.compile("-[0-9][0-9]-(.*?) ");//일
                     break;
-
+                case 2:
+                    p = Pattern.compile("-[0-9][0-9] (.*?):[0-9][0-9].[0-9]$");//시간
             }
             m = p.matcher(data);
             if (m.find()) {
                 date[i] = m.group(1);
             }
         }
+        listVo.setDate_ym(date[0]);
+        listVo.setDate_day(date[1]);
+        listVo.setTime(date[2]);
         return date;
     }
 

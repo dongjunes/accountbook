@@ -1,0 +1,250 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hipo.fragment.MyDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1000">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="100"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/modify_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="modify" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="150"
+            android:orientation="horizontal"
+            android:weightSum="1000">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="300"
+                android:gravity="center"
+                android:text="money"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="700">
+
+                <TextView
+                    android:id="@+id/money_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="asdf"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/money_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="150"
+            android:orientation="horizontal"
+            android:weightSum="1000">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="300"
+                android:gravity="center"
+                android:text="paid"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="700">
+
+                <TextView
+                    android:id="@+id/paid_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="asdf"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/money_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/paid_spinner"
+                    android:visibility="invisible"></Spinner>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="150"
+            android:orientation="horizontal"
+            android:weightSum="1000">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="300"
+                android:gravity="center"
+                android:text="name"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="700">
+
+                <TextView
+                    android:id="@+id/name_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="asdf"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="150"
+            android:orientation="horizontal"
+            android:weightSum="1000">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="300"
+                android:gravity="center"
+                android:text="category"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="700">
+
+                <TextView
+                    android:id="@+id/category_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="asdf"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/category_list"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginBottom="15sp"
+            android:layout_weight="150"
+            android:orientation="horizontal"
+            android:weightSum="1000">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="300"
+                android:gravity="center"
+                android:text="date"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <FrameLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="700">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/date_text"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="16.02"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/time_text"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="12:02"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

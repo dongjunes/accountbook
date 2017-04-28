@@ -42,7 +42,7 @@ public class GetListDataThread extends Thread {
             List<ListVo> list = pasingToList(jsonData);
             putMessage(list);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("server", "서버에 문제가 있습니다.");
         }
     }
 
