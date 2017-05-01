@@ -171,4 +171,12 @@ public class ListVo implements Serializable {
         return Integer.parseInt(mon);
     }
 
+    public int[] hourMin() {
+        StringTokenizer tokenizer = new StringTokenizer(time, ":");
+        int times[] = new int[2];
+        times[0] = Integer.parseInt(tokenizer.nextToken());
+        times[1] = Integer.parseInt(tokenizer.nextToken());
+        return times;
+    }
+
 }

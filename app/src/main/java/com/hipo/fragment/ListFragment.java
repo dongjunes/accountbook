@@ -25,7 +25,6 @@ import com.hipo.model.pojo.UserVo;
 import com.hipo.utils.GetListDataThread;
 import com.hipo.utils.SortingThread;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -68,7 +67,7 @@ public class ListFragment extends Fragment {
                 bundle.putSerializable("listVo", vo);
                 dialogFragment.setArguments(bundle);
                 FragmentManager fm = getFragmentManager();
-                dialogFragment.show(fm,"tags");
+                dialogFragment.show(fm, "tags");
 
             }
         };
