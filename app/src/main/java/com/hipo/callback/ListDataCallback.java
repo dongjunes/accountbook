@@ -6,5 +6,5 @@ package com.hipo.callback;
 
 public interface ListDataCallback {
     public void test(int i);
-
+    public void test2();
 }

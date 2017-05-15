@@ -93,7 +93,8 @@ public class CalendarFragment extends DialogFragment {
             case 1:
                 year = 2017;
         }
-        countingDate(position + 1, year);
+        month=position + 1;
+        countingDate(month, year);
     }
 
     @OnItemSelected(R.id.year_spinner)

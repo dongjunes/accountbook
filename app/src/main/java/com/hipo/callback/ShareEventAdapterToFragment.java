@@ -2,13 +2,13 @@ package com.hipo.callback;
 
 import android.view.View;
 
-import com.hipo.model.pojo.ListVo;
+import com.hipo.model.pojo.AddedListVo;
 
 /**
  * Created by dongjune on 2017-04-28.
  */
 
 public interface ShareEventAdapterToFragment {
-    public void event(View v, ListVo vo);
+    public void event(View v, AddedListVo vo);
 
 }

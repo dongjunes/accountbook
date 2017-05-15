@@ -3,6 +3,7 @@ package com.hipo.component.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,11 +11,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.hipo.callback.ReflashListData;
 import com.hipo.callback.SettingDataCallback;
 import com.hipo.component.service.MyService;
+import com.hipo.fragment.ListFragment;
+import com.hipo.fragment.MyDialogFragment;
 import com.hipo.model.NetworkTask2;
+import com.hipo.model.pojo.AddedListVo;
 import com.hipo.utils.SectionsPagerAdapter;
 import com.hipo.callback.ListDataCallback;
 import com.hipo.lookie.R;
@@ -23,7 +30,11 @@ import com.hipo.model.pojo.UserVo;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TabbedActivity extends AppCompatActivity implements ListDataCallback, SettingDataCallback {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class TabbedActivity extends AppCompatActivity implements SettingDataCallback, ReflashListData {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -42,6 +53,8 @@ public class TabbedActivity extends AppCompatActivity implements ListDataCallbac
     private NetworkTask2 task2;
     private SharedPreferences pref;
     private UserVo vo = null;
+    @BindView(R.id.add_icon)
+    ImageView addIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +63,15 @@ public class TabbedActivity extends AppCompatActivity implements ListDataCallbac
         exchangeServer();
         startService(vo);
         init(vo);
+        ButterKnife.bind(this);
+    }
 
+    @OnClick(R.id.add_icon)
+    public void addIconClick(View v) {
+        Log.d("click!!!", "addicon");
+        MyDialogFragment dialogFragment = new MyDialogFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        dialogFragment.show(fm, "tags");
     }
 
     private void exchangeServer() {
@@ -112,10 +133,6 @@ public class TabbedActivity extends AppCompatActivity implements ListDataCallbac
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-    @Override
-    public void test(int i) {
-        Log.d("testCallback", i + "");
-    }
 
     private boolean getPreferences() {
         pref = getSharedPreferences("serviceBool", MODE_PRIVATE);
@@ -137,5 +154,11 @@ public class TabbedActivity extends AppCompatActivity implements ListDataCallbac
             stopService(intent);
             setPreferences(false);
         }
+    }
+
+    @Override
+    public void reflash(AddedListVo vo) {
+        Log.d("새로고침", "어떡하냐");
+        mSectionsPagerAdapter.reflashList();
     }
 }

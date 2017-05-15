@@ -16,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.facebook.Profile;
 import com.hipo.callback.ListDataCallback;
+import com.hipo.callback.ReflashListData;
 import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
 import com.hipo.model.RecyclerAdapter;
-import com.hipo.model.pojo.ListVo;
+import com.hipo.model.pojo.AddedListVo;
 import com.hipo.model.pojo.UserVo;
 import com.hipo.utils.GetListDataThread;
 import com.hipo.utils.SortingThread;
@@ -31,9 +33,8 @@ import java.util.List;
  * Created by dongjune on 2017-04-20.
  */
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements ReflashListData {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private ListDataCallback dataCallback;
     private RecyclerView recyclerView = null;
     private Spinner spinner;
     private Handler listHandler, sortHandler;
@@ -50,7 +51,6 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = null;
@@ -61,12 +61,15 @@ public class ListFragment extends Fragment {
         init(view);
         shareEvent = new ShareEventAdapterToFragment() {
             @Override
-            public void event(View v, ListVo vo) {
+            public void event(View v, AddedListVo vo) {
+
                 MyDialogFragment dialogFragment = new MyDialogFragment();
+                Log.d("listlistVo", vo.toString());
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("listVo", vo);
+                bundle.putSerializable("AddedListVo", vo);
                 dialogFragment.setArguments(bundle);
                 FragmentManager fm = getFragmentManager();
+                dialogFragment.setTargetFragment(ListFragment.this, 0);
                 dialogFragment.show(fm, "tags");
 
             }
@@ -75,24 +78,19 @@ public class ListFragment extends Fragment {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                List<ListVo> list = (List<ListVo>) msg.obj;
+                List<AddedListVo> list = (List<AddedListVo>) msg.obj;
                 Log.d("List!!List", list.toString());
                 recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item, shareEvent));
                 setSpinnerEvent(list);
             }
         };
+
         GetListDataThread listThread = new GetListDataThread(listHandler, vo.getId());
         listThread.start();
 
-        dataCallback.test(1);
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        dataCallback = (ListDataCallback) activity;
-    }
 
     private void init(View v) {
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
@@ -103,7 +101,7 @@ public class ListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setSpinnerEvent(final List<ListVo> list) {
+    private void setSpinnerEvent(final List<AddedListVo> list) {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -117,8 +115,8 @@ public class ListFragment extends Fragment {
                             @Override
                             public void handleMessage(Message msg) {
                                 super.handleMessage(msg);
-                                final List<ListVo> listVo = (List<ListVo>) msg.obj;
-                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), listVo, R.layout.recycler_item, shareEvent));
+                                final List<AddedListVo> AddedListVo = (List<AddedListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), AddedListVo, R.layout.recycler_item, shareEvent));
                             }
                         };
                         sort = new SortingThread(1, list, sortHandler);
@@ -129,8 +127,8 @@ public class ListFragment extends Fragment {
                             @Override
                             public void handleMessage(Message msg) {
                                 super.handleMessage(msg);
-                                final List<ListVo> listVo = (List<ListVo>) msg.obj;
-                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), listVo, R.layout.recycler_item, shareEvent));
+                                final List<AddedListVo> AddedListVo = (List<AddedListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), AddedListVo, R.layout.recycler_item, shareEvent));
                             }
                         };
                         sort = new SortingThread(2, list, sortHandler);
@@ -146,4 +144,15 @@ public class ListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void reflash(AddedListVo vo) {
+        Log.d("잘왔어요", "ㅇㅇㅇ");
+        GetListDataThread listThread = new GetListDataThread(listHandler, vo.getId());
+        listThread.start();
+    }
+
+    public void reflashing() {
+        GetListDataThread listThread = new GetListDataThread(listHandler, Profile.getCurrentProfile().getId());
+        listThread.start();
+    }
 }

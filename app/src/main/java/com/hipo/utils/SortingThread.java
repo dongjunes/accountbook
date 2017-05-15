@@ -4,7 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.hipo.model.pojo.ListVo;
+
+import com.hipo.model.pojo.AddedListVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.List;
 
 public class SortingThread extends Thread {
     private int div;
-    private List<ListVo> listVo;
-    private ListVo arr[];
+    private List<AddedListVo> AddedListVo;
+    private AddedListVo arr[];
     private Handler handler;
 
-    public SortingThread(int div, List<ListVo> listVo, Handler handler) {
+    public SortingThread(int div, List<AddedListVo> AddedListVo, Handler handler) {
         this.div = div;
-        this.listVo = listVo;
+        this.AddedListVo = AddedListVo;
         this.handler = handler;
     }
 
@@ -37,7 +38,7 @@ public class SortingThread extends Thread {
             h.insert(arr[i]);
         }
 
-        List<ListVo> list = new ArrayList<>();
+        List<AddedListVo> list = new ArrayList<>();
 
         for (int i = 0; i < arr.length; i++) {
             list.add(h.delete());
@@ -46,16 +47,16 @@ public class SortingThread extends Thread {
         putHandler(list);
     }
 
-    private void putHandler(List<ListVo> vo) {
+    private void putHandler(List<AddedListVo> vo) {
         Message msg = new Message();
         msg.obj = vo;
         handler.sendMessage(msg);
     }
 
-    private ListVo[] convertList() {
-        ListVo[] vo = new ListVo[listVo.size()];
+    private AddedListVo[] convertList() {
+        AddedListVo[] vo = new AddedListVo[AddedListVo.size()];
         for (int i = 0; i < vo.length; i++) {
-            vo[i] = listVo.get(i);
+            vo[i] = AddedListVo.get(i);
             Log.d("vo converting", vo[i].toString());
         }
         return vo;

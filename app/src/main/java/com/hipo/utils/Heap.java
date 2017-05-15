@@ -1,32 +1,33 @@
 package com.hipo.utils;
 
-import com.hipo.model.pojo.ListVo;
+import com.hipo.model.pojo.AddedListVo;
 
 /**
  * Created by dongjune on 2017-04-27.
  */
 
 public class Heap {
-    //
-    int useNum = 0;
-    ListVo arr[];
-    int div = 0;
+    private int useNum = 0;
+    private AddedListVo arr[];
+    private int div = 0;
+    private AddedListVoFunction function;
 
     public Heap(int length, int div) {
-        arr = new ListVo[length + 1];
+        arr = new AddedListVo[length + 1];
         this.div = div;
+        function = new AddedListVoFunction();
     }
 
-    public void insert(ListVo data) {
+    public void insert(AddedListVo data) {
         int i = ++useNum;
         if (div == 1) {
-            while (i != 1 && data.convertMoney() > arr[i / 2].convertMoney()) {
+            while (i != 1 && function.convertMoney(data) > function.convertMoney(arr[i / 2])) {
                 arr[i] = arr[i / 2];
                 i /= 2;
             }
             arr[i] = data;
         } else if (div == 2) {
-            while (i != 1 && data.convertMoney() < arr[i / 2].convertMoney()) {
+            while (i != 1 && function.convertMoney(data) < function.convertMoney(arr[i / 2])) {
                 arr[i] = arr[i / 2];
                 i /= 2;
             }
@@ -35,19 +36,19 @@ public class Heap {
 
     }
 
-    public ListVo delete() {
+    public AddedListVo delete() {
         int parent, child;
-        ListVo data, temp;
+        AddedListVo data, temp;
         data = arr[1];
         temp = arr[useNum--];
         parent = 1;
         child = 2;
         if (div == 1) {
             while (child <= useNum) {
-                if (child < useNum && arr[child].convertMoney() < arr[child + 1].convertMoney()) {
+                if (child < useNum && function.convertMoney(arr[child]) < function.convertMoney(arr[child + 1])) {
                     child++;
                 }
-                if (temp.convertMoney() >= arr[child].convertMoney()) {
+                if (function.convertMoney(temp) >= function.convertMoney(arr[child])) {
                     break;
                 }
 
@@ -57,10 +58,10 @@ public class Heap {
             }
         } else if (div == 2) {
             while (child <= useNum) {
-                if (child < useNum && arr[child].convertMoney() > arr[child + 1].convertMoney()) {
+                if (child < useNum && function.convertMoney(arr[child]) > function.convertMoney(arr[child + 1])) {
                     child++;
                 }
-                if (temp.convertMoney() <= arr[child].convertMoney()) {
+                if (function.convertMoney(temp) <= function.convertMoney(arr[child])) {
                     break;
                 }
 

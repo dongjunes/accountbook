@@ -9,9 +9,9 @@ import android.os.Message;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import com.facebook.Profile;
 import com.hipo.component.service.MyService;
 import com.hipo.model.NetworkTask2;
-import com.hipo.model.pojo.ListVo;
 import com.hipo.model.pojo.UserVo;
 import com.hipo.utils.MessageParsingThread;
 
@@ -25,12 +25,7 @@ import java.util.Map;
 
 public class BroadCast extends BroadcastReceiver {
     private Handler handler;
-    private UserVo userVo;
-    private ListVo listVo;
-
-    public BroadCast(UserVo vo) {
-        this.userVo = vo;
-    }
+    private String userId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -85,9 +80,10 @@ public class BroadCast extends BroadcastReceiver {
     }
 
     private void sharingServer(String arr[]) {
-        NetworkTask2 task2 = new NetworkTask2(userVo.getId(), 3);
+        userId = Profile.getCurrentProfile().getId();
+        NetworkTask2 task2 = new NetworkTask2(userId, 3);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("id", userVo.getId());
+        params.put("id", userId);
         params.put("bank", arr[0]);
         params.put("price", arr[1]);
         params.put("date", arr[2]);
