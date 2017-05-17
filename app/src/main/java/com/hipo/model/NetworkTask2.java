@@ -38,8 +38,10 @@ public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/getList");
         } else if (receive == 5) {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/updateList");
-        } else {
+        } else if (receive == 6) {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/addVo");
+        } else {
+            http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/deleteVo");
         }
 // Parameter 를 전송한다.
         http.addAllParameters(maps[0]);

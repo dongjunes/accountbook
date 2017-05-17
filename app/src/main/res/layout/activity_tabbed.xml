@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorSelected"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -33,7 +33,7 @@
                 <TextView
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
+                    android:layout_weight="90"
                     android:gravity="left"
                     android:paddingTop="8dp"
                     android:text="@string/appName"
@@ -44,8 +44,9 @@
                     android:id="@+id/add_icon"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="20"
-                    android:background="@mipmap/hipologo"
+                    android:layout_margin="10dp"
+                    android:layout_weight="10"
+                    android:background="@mipmap/add"
                     android:scaleType="fitXY" />
 
             </LinearLayout>
@@ -55,7 +56,8 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/tab_color_selector" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

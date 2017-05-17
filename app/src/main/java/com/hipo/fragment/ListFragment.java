@@ -80,7 +80,16 @@ public class ListFragment extends Fragment implements ReflashListData {
                 super.handleMessage(msg);
                 List<AddedListVo> list = (List<AddedListVo>) msg.obj;
                 Log.d("List!!List", list.toString());
-                recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item, shareEvent));
+                sortHandler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        final List<AddedListVo> AddedListVo = (List<AddedListVo>) msg.obj;
+                        recyclerView.setAdapter(new RecyclerAdapter(getContext(), AddedListVo, R.layout.recycler_item, shareEvent));
+                    }
+                };
+                sort = new SortingThread(3, list, sortHandler);
+                sort.start();
                 setSpinnerEvent(list);
             }
         };
@@ -108,9 +117,32 @@ public class ListFragment extends Fragment implements ReflashListData {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        recyclerView.setAdapter(new RecyclerAdapter(getContext(), list, R.layout.recycler_item, shareEvent));
+                        sortHandler = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                final List<AddedListVo> AddedListVo = (List<AddedListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), AddedListVo, R.layout.recycler_item, shareEvent));
+                            }
+                        };
+                        sort = new SortingThread(3, list, sortHandler);
+                        sort.start();
                         break;
+
                     case 1:
+                        sortHandler = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                final List<AddedListVo> AddedListVo = (List<AddedListVo>) msg.obj;
+                                recyclerView.setAdapter(new RecyclerAdapter(getContext(), AddedListVo, R.layout.recycler_item, shareEvent));
+                            }
+                        };
+                        sort = new SortingThread(4, list, sortHandler);
+                        sort.start();
+                        break;
+
+                    case 2:
                         sortHandler = new Handler() {
                             @Override
                             public void handleMessage(Message msg) {
@@ -122,7 +154,7 @@ public class ListFragment extends Fragment implements ReflashListData {
                         sort = new SortingThread(1, list, sortHandler);
                         sort.start();
                         break;
-                    case 2:
+                    case 3:
                         sortHandler = new Handler() {
                             @Override
                             public void handleMessage(Message msg) {

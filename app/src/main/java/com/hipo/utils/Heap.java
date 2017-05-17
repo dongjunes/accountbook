@@ -32,6 +32,18 @@ public class Heap {
                 i /= 2;
             }
             arr[i] = data;
+        } else if (div == 3) {
+            while (i != 1 && function.convertDateNum(data) > function.convertDateNum(arr[i / 2])) {
+                arr[i] = arr[i / 2];
+                i /= 2;
+            }
+            arr[i] = data;
+        } else if (div == 4) {
+            while (i != 1 && function.convertDateNum(data) < function.convertDateNum(arr[i / 2])) {
+                arr[i] = arr[i / 2];
+                i /= 2;
+            }
+            arr[i] = data;
         }
 
     }
@@ -69,14 +81,34 @@ public class Heap {
                 parent = child;
                 child *= 2;
             }
+        } else if (div == 3) {
+            while (child <= useNum) {
+                if (child < useNum && function.convertDateNum(arr[child]) < function.convertDateNum(arr[child + 1])) {
+                    child++;
+                }
+                if (function.convertDateNum(temp) >= function.convertDateNum(arr[child])) {
+                    break;
+                }
+
+                arr[parent] = arr[child];
+                parent = child;
+                child *= 2;
+            }
+        } else if (div == 4) {
+            while (child <= useNum) {
+                if (child < useNum && function.convertDateNum(arr[child]) > function.convertDateNum(arr[child + 1])) {
+                    child++;
+                }
+                if (function.convertDateNum(temp) <= function.convertDateNum(arr[child])) {
+                    break;
+                }
+
+                arr[parent] = arr[child];
+                parent = child;
+                child *= 2;
+            }
         }
         arr[parent] = temp;
         return data;
-    }
-
-    public void printData() {
-        for (int i = 1; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
-        }
     }
 }

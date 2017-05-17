@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="list_spinner">
-        <item>입력순</item>
+        <item>최신순</item>
+        <item>오래된순</item>
         <item>높은금액순</item>
         <item>낮은금액순</item>
+
     </string-array>
     <string-array name="paid_spinner">
         <item>현금</item>

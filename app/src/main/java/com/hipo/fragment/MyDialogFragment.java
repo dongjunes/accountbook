@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -48,7 +49,9 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
     private NetworkTask2 task2;
     private boolean voCheck = false;
     @BindView(R.id.modify_btn)
-    Button modifyBtn;
+    ImageView modifyBtn;
+    @BindView(R.id.delete_btn)
+    ImageView deleteBtn;
     @BindView(R.id.time_text)
     TextView timeText;
     @BindView(R.id.paid_text)
@@ -86,11 +89,13 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
             distin = 2;
             listVo = (AddedListVo) bundle.getSerializable("AddedListVo");
             Log.d("잘가저왓니?", listVo.toString());
+
             dateSb = new StringBuilder();
             reflashData = (ReflashListData) getTargetFragment();
         } else {
             distin = 1;
             listVo = new AddedListVo();
+
         }
 
     }
@@ -106,6 +111,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
         if (distin == 1) {
             builder.setTitle("직접입력하기");
+            deleteBtn.setVisibility(View.INVISIBLE);
         }
         if (distin == 2) {
 
@@ -117,6 +123,15 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
         return builder.create();
     }
 
+    @OnClick(R.id.delete_btn)
+    public void onDeleteButtonClick(View view) {
+        task2 = new NetworkTask2(Profile.getCurrentProfile().getId(), 7);
+        Map<String, String> params = new HashMap<>();
+        params.put("list_id", listVo.getListId());
+        task2.execute(params);
+        dismiss();
+    }
+
     @OnClick(R.id.modify_btn)
     public void onButtonClick(View view) {
         if (distin == 1) {
@@ -124,21 +139,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
                 String money = convertForForm(moneyEdit.getText().toString());
                 if (convertingDone = true) {
-                    listVo.setDay(dateText.getText() + " " + timeText.getText());
-
-                    listVo.setMoney(money);
-                    listVo.setPaid(moneySpinner.getSelectedItem().toString());
-                    listVo.setCategory(categorySpinner.getSelectedItem().toString());
-                    listVo.setName(nameEdit.getText().toString());
-                    listVo.setLocationX("o");
-                    listVo.setLocationY("o");
-                    listVo.setOperations("-");
-                    listVo.setBank("없음");
-                    listVo.setListId("0");
-                    listVo.setId(Profile.getCurrentProfile().getId());
-                    listVo.setDate_day("0");
-                    listVo.setDate_ym("0");
-
+                    settingListVo(money);
                     task2 = new NetworkTask2(Profile.getCurrentProfile().getId(), 6);
                     Gson gson = new Gson();
                     ListVo vo = new ConvertListVo().converting(listVo);
@@ -270,9 +271,9 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
         };
         if (distin == 2) {
             int times[] = listFunction.hourMin(listVo);
-            dialog = new TimePickerDialog(getContext(), listener, times[0], times[1], true);
+            dialog = new TimePickerDialog(getContext(), listener, times[0], times[1], false);
         }
-        dialog = new TimePickerDialog(getContext(), listener, 0, 0, true);
+        dialog = new TimePickerDialog(getContext(), listener, 0, 0, false);
         dialog.show();
     }
 
@@ -283,6 +284,22 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
         }
         dateText.setText(dateArr[0] + "-" + dateArr[1] + "-" + dateArr[2]);
 
+    }
+
+    public void settingListVo(String money) {
+        listVo.setDay(dateText.getText() + " " + timeText.getText());
+        listVo.setMoney(money);
+        listVo.setPaid(moneySpinner.getSelectedItem().toString());
+        listVo.setCategory(categorySpinner.getSelectedItem().toString());
+        listVo.setName(nameEdit.getText().toString());
+        listVo.setLocationX("o");
+        listVo.setLocationY("o");
+        listVo.setOperations("-");
+        listVo.setBank("없음");
+        listVo.setListId("0");
+        listVo.setId(Profile.getCurrentProfile().getId());
+        listVo.setDate_day("0");
+        listVo.setDate_ym("0");
     }
 
     public int checkSelection(String select, int div) {

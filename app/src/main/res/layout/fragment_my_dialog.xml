@@ -16,12 +16,26 @@
             android:layout_height="0dip"
             android:layout_marginBottom="15sp"
             android:layout_weight="100"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="horizontal">
 
-            <Button
+            <ImageView
+                android:id="@+id/delete_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/delete"
+                android:scaleType="fitXY"/>
+
+            <LinearLayout
+                android:layout_width="10sp"
+                android:layout_height="match_parent"></LinearLayout>
+
+            <ImageView
                 android:id="@+id/modify_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/pen"
+                android:scaleType="fitXY"
                 android:text="modify" />
         </LinearLayout>
 
