@@ -76,7 +76,7 @@ public class LoginActivity extends Activity {
                                     vo.setAge(object.getJSONObject("age_range").get("min") + "");
 
                                 } else {
-                                    Log.d("나이가 없습니다 ","ㅎㅎ");
+                                    Log.d("나이가 없습니다 ", "ㅎㅎ");
                                 }
 
                             } catch (JSONException e) {
@@ -133,11 +133,12 @@ public class LoginActivity extends Activity {
                     /* 사용자 단말기의 권한 중 "전화걸기" 권한이 허용되어 있는지 체크한다.
                     *  int를 쓴 이유? 안드로이드는 C기반이기 때문에, Boolean 이 잘 안쓰인다.
                     */
-            int permissionResult = checkSelfPermission(Manifest.permission.RECEIVE_SMS);
+            int permissionResultSMS = checkSelfPermission(Manifest.permission.RECEIVE_SMS);
+            int permissionResultGPS = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
 
                     /* CALL_PHONE의 권한이 없을 때 */
             // 패키지는 안드로이드 어플리케이션의 아이디다.( 어플리케이션 구분자 )
-            if (permissionResult == PackageManager.PERMISSION_DENIED) {
+            if (permissionResultSMS == PackageManager.PERMISSION_DENIED || permissionResultGPS == PackageManager.PERMISSION_DENIED) {
 
                 Log.d("permissionCheck", "2");
                         /* 사용자가 CALL_PHONE 권한을 한번이라도 거부한 적이 있는 지 조사한다.
@@ -145,27 +146,8 @@ public class LoginActivity extends Activity {
                         */
                 if (shouldShowRequestPermissionRationale(Manifest.permission.RECEIVE_SMS)) {
                     Log.d("permissionCheck", "3");
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
-                    dialog.setTitle("권한이 필요합니다.")
-                            .setMessage("가계부자동저장기능을 사용하기 위해서는 단말기의 \"문자수신\" 권한이 필요합니다. 계속하시겠습니까?")
-                            .setPositiveButton("네", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("permissionCheck", "4");
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                        requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, 1000);
-                                    }
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECEIVE_SMS,Manifest.permission.ACCESS_FINE_LOCATION},0);
 
-                                }
-                            })
-                            .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(LoginActivity.this, "기능을 취소했습니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .create()
-                            .show();
                     finish();
                 }
 
@@ -186,7 +168,7 @@ public class LoginActivity extends Activity {
         else {
             Log.d("마쉬멜로 이하버전", ",");
         }
-        Log.d("permissionCheck", "뭘봐시발");
+        Log.d("permissionCheck", "Method Check");
     }
 
     @Override

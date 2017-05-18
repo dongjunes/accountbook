@@ -94,7 +94,7 @@ public class ListFragment extends Fragment implements ReflashListData {
             }
         };
 
-        GetListDataThread listThread = new GetListDataThread(listHandler, vo.getId());
+        GetListDataThread listThread = new GetListDataThread(listHandler, Profile.getCurrentProfile().getId());
         listThread.start();
 
         return view;

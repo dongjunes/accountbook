@@ -10,9 +10,12 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.facebook.Profile;
+import com.google.gson.Gson;
 import com.hipo.component.service.MyService;
 import com.hipo.model.NetworkTask2;
+import com.hipo.model.pojo.ListVo;
 import com.hipo.model.pojo.UserVo;
+import com.hipo.utils.GetMyLocationThread;
 import com.hipo.utils.MessageParsingThread;
 
 import java.util.Date;
@@ -24,17 +27,19 @@ import java.util.Map;
  */
 
 public class BroadCast extends BroadcastReceiver {
-    private Handler handler;
+    private Handler messageHandler, locationHandler;
     private String userId;
+    private Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
             Log.d("BroadCast", "문자가 왔어요 ㅎ");
             String message = messageContent(intent);
             Log.d("BroadCast", "문자 데이터 :" + message);
 
-            handler = new Handler() {
+            messageHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
@@ -46,7 +51,7 @@ public class BroadCast extends BroadcastReceiver {
                     sharingServer(arr);
                 }
             };
-            MessageParsingThread dataThread = new MessageParsingThread(handler, message);
+            MessageParsingThread dataThread = new MessageParsingThread(messageHandler, message);
             dataThread.start();
 
         }
@@ -80,17 +85,42 @@ public class BroadCast extends BroadcastReceiver {
     }
 
     private void sharingServer(String arr[]) {
-        userId = Profile.getCurrentProfile().getId();
         NetworkTask2 task2 = new NetworkTask2(userId, 3);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("id", userId);
-        params.put("bank", arr[0]);
-        params.put("price", arr[1]);
-        params.put("date", arr[2]);
-        params.put("place", arr[3]);
-        params.put("paid", "카드");
-        params.put("category", "생활비");
-        params.put("operations", "-");
+        String listVoJson = convertJson(arr);
+        params.put("ListVo", listVoJson);
         task2.execute(params);
     }
+
+    private ListVo setListVo(String arr[]) {
+        final ListVo listVo = new ListVo();
+        listVo.setId(userId = Profile.getCurrentProfile().getId());
+        listVo.setBank(arr[0]);
+        listVo.setMoney(arr[1]);
+        listVo.setDay(arr[2]);
+        listVo.setName(arr[3]);
+        listVo.setPaid("카드");
+        listVo.setCategory("생활비");
+        listVo.setOperations("-");
+
+        locationHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                double[] latLngMsg = (double[]) msg.obj;
+                listVo.setLocationX(String.valueOf(latLngMsg[0]));
+                listVo.setLocationY(String.valueOf(latLngMsg[1]));
+            }
+        };
+        GetMyLocationThread locationThread = new GetMyLocationThread(context, locationHandler);
+        locationThread.run();
+        return listVo;
+    }
+
+    private String convertJson(String arr[]) {
+        Gson gson = new Gson();
+        String listVoJson = gson.toJson(setListVo(arr), ListVo.class);
+        return listVoJson;
+    }
+//spring에서 자동저장되는 부분수정하기
 }
