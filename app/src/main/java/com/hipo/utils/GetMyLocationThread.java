@@ -44,10 +44,11 @@ public class GetMyLocationThread extends Thread {
 
     LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            double latLng[] = new double[2];
+            Double latLng[] = new Double[2];
             latLng[0] = location.getLatitude();
             latLng[1] = location.getLongitude();
             sendMessageToFragment(latLng);
+            locationManager.removeUpdates(locationListener);
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -64,7 +65,6 @@ public class GetMyLocationThread extends Thread {
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // 네트워크 프로바이더 사용가능여부
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
         Log.d("getLocation", "isGPSEnabled=" + isGPSEnabled);
         Log.d("getLocation", "isNetworkEnabled=" + isNetworkEnabled);
     }
@@ -107,13 +107,13 @@ public class GetMyLocationThread extends Thread {
         if (lastKnownLocation != null)
 
         {
-            double lng = lastKnownLocation.getLatitude();
-            double lat = lastKnownLocation.getLatitude();
+            Double lng = lastKnownLocation.getLatitude();
+            Double lat = lastKnownLocation.getLatitude();
             Log.d("Main", "longtitude=" + lng + ", latitude=" + lat);
         }
     }
 
-    public void sendMessageToFragment(double[] latLng) {
+    public void sendMessageToFragment(Double[] latLng) {
         Message msg = new Message();
         msg.obj = latLng;
         handler.sendMessage(msg);

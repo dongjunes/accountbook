@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string-array name="year_spinner">
+        <item>2016</item>
+        <item>2017</item>
+    </string-array>
+
+    <string-array name="month_spinner">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
     <string-array name="list_spinner">
         <item>최신순</item>
         <item>오래된순</item>
         <item>높은금액순</item>
         <item>낮은금액순</item>
-
     </string-array>
+
     <string-array name="paid_spinner">
         <item>현금</item>
         <item>카드</item>
         <item>기타</item>
     </string-array>
+
     <string-array name="category_spinner">
         <item>생활비</item>
         <item>기타</item>
     </string-array>
+
     <string-array name="list_month">
         <item>1월</item>
         <item>2월</item>

@@ -270,7 +270,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
             }
         };
         if (distin == 2) {
-            int times[] = listFunction.hourMin(listVo);
+            int times[] = listFunction.hourMin(listVo.getDay());
             dialog = new TimePickerDialog(getContext(), listener, times[0], times[1], false);
         }
         dialog = new TimePickerDialog(getContext(), listener, 0, 0, false);

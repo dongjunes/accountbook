@@ -10,11 +10,14 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import com.facebook.Profile;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,11 +25,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hipo.lookie.R;
+import com.hipo.model.NetworkTask2;
+import com.hipo.model.pojo.AddedListVo;
+import com.hipo.utils.AddedListVoFunction;
+import com.hipo.utils.GetDateLocationThread;
 import com.hipo.utils.GetMyLocationThread;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 
 /**
@@ -35,10 +43,16 @@ import butterknife.OnClick;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private FragmentActivity mContext;
-    private Handler handler;
+    private Handler locHandler, getListLocHandler;
+    private GetDateLocationThread getDateLocationThread;
+    private int timeArr[];
 
     @BindView(R.id.myLocBtn)
     Button myLocBtn;
+    @BindView(R.id.year_spinner)
+    Spinner yearSpinner;
+    @BindView(R.id.month_spinner)
+    Spinner monthSpinner;
 
     public MapFragment() {
         // Required empty public constructor
@@ -55,9 +69,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        mContext = (FragmentActivity) activity;
-        super.onAttach(activity);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
 
@@ -70,6 +83,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this, view);
+
+        setYearSpinner();
+        setMonthSpinner();
+        getListLocHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                //TODO 서버에서 가저온 좌표로 마크표시하기
+            }
+        };
+        getDateLocationThread = new GetDateLocationThread(getListLocHandler, timeArr);
+        getDateLocationThread.run();
+
         return view;
     }
 
@@ -77,29 +103,73 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // Add a marker in Sydney, Australia, and move the camera.
-        double[] latLngmsg = new double[]{37.541, 126.986};
-        settingMap(latLngmsg);
+        locHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Double[] latLngMsg = (Double[]) msg.obj;
+                settingMap(latLngMsg);
+            }
+        };
+        GetMyLocationThread myLocationThread = new GetMyLocationThread(getContext(), locHandler);
+        myLocationThread.start();
     }
 
     @OnClick(R.id.myLocBtn)
     public void moveMyLocation(View v) {
-        handler = new Handler() {
+        locHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                double[] latLngMsg = (double[]) msg.obj;
+                Double[] latLngMsg = (Double[]) msg.obj;
                 settingMap(latLngMsg);
             }
         };
-        GetMyLocationThread myLocationThread = new GetMyLocationThread(getContext(), handler);
+        GetMyLocationThread myLocationThread = new GetMyLocationThread(getContext(), locHandler);
         myLocationThread.start();
     }
 
-    public void settingMap(double[] latLng) {
-        LatLng myLocation = new LatLng(latLng[0], latLng[1]);
-        mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker in Seoul"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+    @OnItemSelected(R.id.year_spinner)
+    public void yearSpinnerSelected(Spinner spinner, int position) {
+        switch (position) {
+            case 0:
 
+                break;
+            case 1:
+
+                break;
+        }
+    }
+
+    @OnItemSelected(R.id.month_spinner)
+    public void monthSpinnerSelected(Spinner spinner, int position) {
+
+    }
+
+    public void settingMap(Double[] latLng) {
+        LatLng myLocation = new LatLng(latLng[0], latLng[1]);
+        mMap.addMarker(new MarkerOptions().position(myLocation).title("현재 내위치"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+    }
+
+    public void setYearSpinner() {
+        timeArr = AddedListVoFunction.convertDateToInt(AddedListVoFunction.inDate);
+        for (int i = 0; i < timeArr.length; i++) {
+            if (String.valueOf(timeArr[5]).equals(yearSpinner.getItemAtPosition(i).toString())) {
+                yearSpinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    public void setMonthSpinner() {
+        timeArr = AddedListVoFunction.convertDateToInt(AddedListVoFunction.inDate);
+        for (int i = 0; i < timeArr.length; i++) {
+            if (String.valueOf(timeArr[1]).equals(monthSpinner.getItemAtPosition(i).toString())) {
+                monthSpinner.setSelection(i);
+                break;
+            }
+        }
     }
 
 }

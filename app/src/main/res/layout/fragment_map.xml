@@ -19,21 +19,57 @@
             android:orientation="horizontal"
             android:weightSum="100">
 
+            <Spinner
+                android:id="@+id/year_spinner"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="25"
+                android:entries="@array/year_spinner">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center|left"
+                android:text="년"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/month_spinner"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:entries="@array/month_spinner">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center|left"
+                android:text="월"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/myLocBtn"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:layout_margin="3sp" />
+                android:layout_margin="3sp"
+                android:layout_weight="20" />
 
         </LinearLayout>
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_weight="90"
             android:layout_width="match_parent"
-            android:layout_height="0dip" />
+            android:layout_height="0dip"
+            android:layout_weight="90" />
 
     </LinearLayout>
 

@@ -30,6 +30,8 @@ public class BroadCast extends BroadcastReceiver {
     private Handler messageHandler, locationHandler;
     private String userId;
     private Context context;
+    private ListVo listVo;
+    private NetworkTask2 task2;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -85,15 +87,12 @@ public class BroadCast extends BroadcastReceiver {
     }
 
     private void sharingServer(String arr[]) {
-        NetworkTask2 task2 = new NetworkTask2(userId, 3);
-        Map<String, String> params = new HashMap<String, String>();
-        String listVoJson = convertJson(arr);
-        params.put("ListVo", listVoJson);
-        task2.execute(params);
+        setListVo(arr);
+
     }
 
-    private ListVo setListVo(String arr[]) {
-        final ListVo listVo = new ListVo();
+    private void setListVo(String arr[]) {
+        listVo = new ListVo();
         listVo.setId(userId = Profile.getCurrentProfile().getId());
         listVo.setBank(arr[0]);
         listVo.setMoney(arr[1]);
@@ -107,20 +106,23 @@ public class BroadCast extends BroadcastReceiver {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                double[] latLngMsg = (double[]) msg.obj;
-                listVo.setLocationX(String.valueOf(latLngMsg[0]));
-                listVo.setLocationY(String.valueOf(latLngMsg[1]));
+                Double[] latLngMsg = (Double[]) msg.obj;
+                listVo.setLocationX(latLngMsg[0].toString());
+                listVo.setLocationY(latLngMsg[1].toString());
+                Log.d("CheckingListVoLatLng", listVo.getLocationX() + " " + listVo.getLocationY());
+
+                Gson gson = new Gson();
+                String listVoJson = gson.toJson(listVo, ListVo.class);
+                task2 = new NetworkTask2(userId, 3);
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("listVo", listVoJson);
+                Log.d("listVoSettingCheck", listVoJson);
+
+                task2.execute(params);
             }
         };
         GetMyLocationThread locationThread = new GetMyLocationThread(context, locationHandler);
         locationThread.run();
-        return listVo;
     }
 
-    private String convertJson(String arr[]) {
-        Gson gson = new Gson();
-        String listVoJson = gson.toJson(setListVo(arr), ListVo.class);
-        return listVoJson;
-    }
-//spring에서 자동저장되는 부분수정하기
 }
