@@ -3,8 +3,13 @@ package com.hipo.utils;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.hipo.model.pojo.AddedListVo;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,5 +108,16 @@ public class AddedListVoFunction {
         return sum;
     }
 
-
+    public static List<AddedListVo> pasingToList(String jsonData) {
+        String[] st = jsonData.split("\"ListVo[0-9]\":");
+        Gson gson = new Gson();
+        List<AddedListVo> list = new ArrayList<AddedListVo>();
+        for (int i = 1; i < st.length; i++) {
+            JsonReader reader = new JsonReader(new StringReader(st[i]));
+            reader.setLenient(true);
+            list.add((AddedListVo) gson.fromJson(reader, AddedListVo.class));
+        }
+        Log.d("제발성공하게해주세용", list.toString());
+        return list;
+    }
 }

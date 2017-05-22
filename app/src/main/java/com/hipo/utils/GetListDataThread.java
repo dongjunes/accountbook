@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.hipo.utils.AddedListVoFunction.pasingToList;
+
 /**
  * Created by dongjune on 2017-04-26.
  */
@@ -51,19 +53,6 @@ public class GetListDataThread extends Thread {
         Message msg = new Message();
         msg.obj = list;
         handler.sendMessage(msg);
-    }
-
-    private List<AddedListVo> pasingToList(String jsonData) {
-        String[] st = jsonData.split("\"ListVo[0-9]\":");
-        Gson gson = new Gson();
-        List<AddedListVo> list = new ArrayList<AddedListVo>();
-        for (int i = 1; i < st.length; i++) {
-            JsonReader reader = new JsonReader(new StringReader(st[i]));
-            reader.setLenient(true);
-            list.add((AddedListVo) gson.fromJson(reader, AddedListVo.class));
-        }
-        Log.d("제발성공하게해주세용", list.toString());
-        return list;
     }
 
 }

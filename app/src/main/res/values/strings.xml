@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Lookie</string>
-    <string name="facebook_app_id"></string>
-    <string name="fb_login_protocol_scheme"></string>
+    <string name="facebook_app_id">326151361133966</string>
+    <string name="fb_login_protocol_scheme">326151361133966</string>
 
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="action_settings">Settings</string>
