@@ -3,6 +3,7 @@ package com.hipo.model;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.facebook.Profile;
 import com.hipo.model.pojo.UserVo;
 import com.hipo.network.HttpClient;
 
@@ -48,8 +49,10 @@ public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/addCategory");
         } else if (receive == 10) {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/getCategoryList");
-        } else {
+        } else if (receive == 11) {
             http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/deleteCategory");
+        } else {
+            http = new HttpClient.Builder("POST", "http://192.168.1.14:8088/account-book/android/" + id + "/getSumPaid");
         }
 // Parameter 를 전송한다.
         http.addAllParameters(maps[0]);

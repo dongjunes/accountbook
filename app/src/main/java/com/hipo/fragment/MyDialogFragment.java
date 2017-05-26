@@ -203,10 +203,14 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
                 moneySpinner.setVisibility(View.INVISIBLE);
                 categorySpinner.setVisibility(View.INVISIBLE);
+                deleteBtn.setVisibility(View.VISIBLE);
+
                 btnBoolean = false;
                 voCheck = true;
                 sendUpdate();
             } else {
+                deleteBtn.setVisibility(View.INVISIBLE);
+
                 moneySpinner.setSelection(checkSelection(listVo.getPaid(), 1));
                 moneySpinner.setSelection(checkSelection(listVo.getCategory(), 2));
                 nameText.setVisibility(View.INVISIBLE);

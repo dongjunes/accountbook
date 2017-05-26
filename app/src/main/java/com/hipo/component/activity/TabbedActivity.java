@@ -2,6 +2,7 @@ package com.hipo.component.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.hipo.callback.ReflashListData;
 import com.hipo.callback.SettingDataCallback;
 import com.hipo.component.service.MyService;
+import com.hipo.fragment.CheckMoneyDialog;
 import com.hipo.fragment.ListFragment;
 import com.hipo.fragment.MyDialogFragment;
 import com.hipo.model.NetworkTask2;
@@ -55,6 +57,8 @@ public class TabbedActivity extends AppCompatActivity implements SettingDataCall
     private UserVo vo = null;
     @BindView(R.id.add_icon)
     ImageView addIcon;
+    @BindView(R.id.check_icon)
+    ImageView checkIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,12 @@ public class TabbedActivity extends AppCompatActivity implements SettingDataCall
         MyDialogFragment dialogFragment = new MyDialogFragment();
         FragmentManager fm = getSupportFragmentManager();
         dialogFragment.show(fm, "tags");
+    }
+
+    @OnClick(R.id.check_icon)
+    public void checkIconOnClick(View v) {
+        CheckMoneyDialog dialogFragmet = new CheckMoneyDialog();
+        dialogFragmet.show(getSupportFragmentManager(), "tags");
     }
 
     private void exchangeServer() {
