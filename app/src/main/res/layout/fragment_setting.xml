@@ -4,13 +4,37 @@
     android:layout_height="match_parent"
     tools:context="com.hipo.lookie.com.hipo.fragment.SettingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+
+        <Button
+            android:id="@+id/category_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_weight="10"
+            android:background="#1b9480"
+            android:gravity="center"
+            android:text="category수정하기"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/loginbtn"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:layout_weight="10"
+            android:gravity="center" />
+
+
+    </LinearLayout>
 
 </FrameLayout>

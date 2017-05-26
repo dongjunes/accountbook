@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
 import com.hipo.model.pojo.AddedListVo;
+import com.hipo.utils.AddedListVoFunction;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,7 +52,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String times[] = parsingDate(date, addedListVo);
         holder.ymText.setText(times[0]);
         holder.dText.setText(times[1]);
-        holder.moneyText.setText(addedListVo.getMoney());
+        holder.moneyText.setText(AddedListVoFunction.convertForForm(addedListVo.getMoney()));
+
         if (addedListVo.getOperations().equals("-")) {
             holder.moneyText.setTextColor(Color.parseColor("#cc0303"));
         } else {

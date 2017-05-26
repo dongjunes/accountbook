@@ -6,11 +6,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +32,9 @@ import com.hipo.model.pojo.AddedListVo;
 import com.hipo.model.pojo.ListVo;
 import com.hipo.utils.AddedListVoFunction;
 import com.hipo.utils.ConvertListVo;
+import com.hipo.utils.GetCategoryListThread;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +50,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
     private StringBuilder dateSb;
     private ReflashListData reflashData;
     private int distin = 0;
+    private Handler categoryListHandler;
     private TimePickerDialog dialog;
     private NetworkTask2 task2;
     private boolean voCheck = false;
@@ -85,6 +91,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
+        setSpinnerAdapter();
         if (bundle != null) {
             distin = 2;
             listVo = (AddedListVo) bundle.getSerializable("AddedListVo");
@@ -98,6 +105,20 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
         }
 
+    }
+
+    public void setSpinnerAdapter() {
+        categoryListHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                ArrayList<String> adapterArray = (ArrayList) msg.obj;
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, adapterArray);
+                categorySpinner.setAdapter(adapter);
+            }
+        };
+        GetCategoryListThread categoryListThread = new GetCategoryListThread(categoryListHandler);
+        categoryListThread.start();
     }
 
     @Override
@@ -156,10 +177,11 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
         } else if (distin == 2) {
             if (btnBoolean) {
-                listVo.setMoney(convertForForm(moneyEdit.getText().toString()));
-                if (convertingDone == false) {
+                if (!(AddedListVoFunction.checkInt(moneyEdit.getText().toString()))) {
+                    Toast.makeText(getContext(), "숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                listVo.setMoney(moneyEdit.getText().toString());
                 listVo.setName(nameEdit.getText().toString());
                 listVo.setPaid((String) moneySpinner.getSelectedItem());
                 listVo.setCategory((String) categorySpinner.getSelectedItem());
@@ -172,7 +194,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
                 nameText.setText(listVo.getName());
 
                 moneyEdit.setVisibility(View.INVISIBLE);
-                moneyText.setText(backConvert(listVo.getMoney()));
+                moneyText.setText(AddedListVoFunction.convertForForm(listVo.getMoney()));
 
                 paidText.setText(listVo.getPaid());
                 categoryText.setText(listVo.getCategory());
@@ -230,7 +252,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
 
         } else if (distin == 2) {
             nameText.setText(listVo.getName());
-            moneyText.setText(listVo.getMoney());
+            moneyText.setText(AddedListVoFunction.convertForForm(listVo.getMoney()));
             paidText.setText(listVo.getPaid());
             categoryText.setText(listVo.getCategory());
             dateText.setText(listVo.getDate_ym() + "-" + listVo.getDate_day());
@@ -270,7 +292,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
             }
         };
         if (distin == 2) {
-            int times[] = listFunction.hourMin(listVo.getDay());
+            int times[] = listFunction.hourMin(listVo.getTime());
             dialog = new TimePickerDialog(getContext(), listener, times[0], times[1], false);
         }
         dialog = new TimePickerDialog(getContext(), listener, 0, 0, false);

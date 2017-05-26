@@ -21,10 +21,45 @@ import java.util.regex.Pattern;
 public class AddedListVoFunction {
     final public static String inDate = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.util.Date());
 
-    public static int convertMoney(AddedListVo addedListVo) {
-        Log.d("vo의 상세정보", addedListVo.toString());
+    final public static String convertForForm(String money) { // 2000 -> 2,000원
+        boolean convertingDone = false;// String이 int로 변환여부 체크(전역으로 사용하기
+        // this.converingDone=true;)
+        try {
+            Integer.parseInt(money);
+            convertingDone = true;
+        } catch (Exception e) {
+            convertingDone = false;
+            System.out.println(e.getMessage() + " 금액입력이 아닙니다.");
+            return "";
+        }
+
         StringBuilder sb = new StringBuilder();
-        StringTokenizer token = new StringTokenizer(addedListVo.getMoney(), ",");
+        for (int i = 0; i < money.length(); i++) {
+            sb.append(money.charAt(i));
+            if ((money.length() - (i + 1)) % 3 == 0) {
+                if (money.length() - 1 == i) {
+
+                } else {
+                    sb.append(",");
+                }
+            }
+        }
+        sb.append("원");
+        return sb.toString();
+    }
+
+    public static String[] dayTimeConvert(String data) {
+        StringTokenizer tokenizer = new StringTokenizer(data, " ");
+        String times[] = new String[2];
+        times[0] = tokenizer.nextToken();
+        times[1] = tokenizer.nextToken();
+        return times;
+    }
+
+    public static int convertMoney(String money) {
+        Log.d("vo의 상세정보", money);
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer token = new StringTokenizer(money, ",");
         while (token.hasMoreTokens()) {
             sb.append(token.nextToken());
         }
@@ -119,5 +154,15 @@ public class AddedListVoFunction {
         }
         Log.d("제발성공하게해주세용", list.toString());
         return list;
+    }
+
+    final public static boolean checkInt(String searching) {
+        try {
+            Integer.parseInt(searching);
+            return true;
+        } catch (Exception e) {
+            return false;
+            // TODO: handle exception
+        }
     }
 }

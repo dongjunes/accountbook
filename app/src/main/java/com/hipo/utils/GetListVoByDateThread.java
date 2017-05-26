@@ -18,11 +18,11 @@ import java.util.concurrent.ExecutionException;
  * Created by dongjune on 2017-05-19.
  */
 
-public class GetDateLocationThread extends Thread {
+public class GetListVoByDateThread extends Thread {
     private Handler handler;
     private int[] monthYear;
 
-    public GetDateLocationThread(Handler handler, int[] monthYear) {
+    public GetListVoByDateThread(Handler handler, int[] monthYear) {
         this.handler = handler;
         this.monthYear = monthYear;
     }
@@ -50,9 +50,16 @@ public class GetDateLocationThread extends Thread {
     }
 
     public void putListInMessage(List<AddedListVo> addedVoList) {
+        setDateInListVo(addedVoList);
         Message msg = new Message();
         msg.obj = addedVoList;
         handler.sendMessage(msg);
+    }
+
+    public void setDateInListVo(List<AddedListVo> addedVoList) {
+        for (int i = 0; i < addedVoList.size(); i++) {
+            addedVoList.get(i).setDate_day(AddedListVoFunction.dayTimeConvert(addedVoList.get(i).getDay())[0]);
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.hipo.utils;
 
+import android.util.Log;
+
 import com.hipo.model.pojo.AddedListVo;
 
 /**
@@ -21,13 +23,14 @@ public class Heap {
     public void insert(AddedListVo data) {
         int i = ++useNum;
         if (div == 1) {
-            while (i != 1 && function.convertMoney(data) > function.convertMoney(arr[i / 2])) {
+            Log.d("dataCheckMoney",data.getMoney());
+            while (i != 1 && Integer.parseInt(data.getMoney())> Integer.parseInt(arr[i / 2].getMoney())) {
                 arr[i] = arr[i / 2];
                 i /= 2;
             }
             arr[i] = data;
         } else if (div == 2) {
-            while (i != 1 && function.convertMoney(data) < function.convertMoney(arr[i / 2])) {
+            while (i != 1 && Integer.parseInt(data.getMoney()) < Integer.parseInt(arr[i / 2].getMoney())) {
                 arr[i] = arr[i / 2];
                 i /= 2;
             }
@@ -57,10 +60,10 @@ public class Heap {
         child = 2;
         if (div == 1) {
             while (child <= useNum) {
-                if (child < useNum && function.convertMoney(arr[child]) < function.convertMoney(arr[child + 1])) {
+                if (child < useNum && Integer.parseInt(arr[child].getMoney()) < Integer.parseInt(arr[child + 1].getMoney())) {
                     child++;
                 }
-                if (function.convertMoney(temp) >= function.convertMoney(arr[child])) {
+                if (Integer.parseInt(temp.getMoney()) >= Integer.parseInt(arr[child].getMoney())) {
                     break;
                 }
 
@@ -70,10 +73,10 @@ public class Heap {
             }
         } else if (div == 2) {
             while (child <= useNum) {
-                if (child < useNum && function.convertMoney(arr[child]) > function.convertMoney(arr[child + 1])) {
+                if (child < useNum && Integer.parseInt(arr[child].getMoney()) > Integer.parseInt(arr[child + 1].getMoney())) {
                     child++;
                 }
-                if (function.convertMoney(temp) <= function.convertMoney(arr[child])) {
+                if (Integer.parseInt(temp.getMoney()) <= Integer.parseInt(arr[child].getMoney())) {
                     break;
                 }
 

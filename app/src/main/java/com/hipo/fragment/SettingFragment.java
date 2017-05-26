@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -18,17 +21,22 @@ import com.hipo.component.activity.LoginActivity;
 import com.hipo.component.service.MyService;
 import com.hipo.lookie.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends Fragment {
     private SettingDataCallback callback;
+    @BindView(R.id.category_dialog)
+    Button categoryDialog;
 
     public SettingFragment() {
         // Required empty public constructor
     }
-
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -43,7 +51,7 @@ public class SettingFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        callback=(SettingDataCallback)activity;
+        callback = (SettingDataCallback) activity;
     }
 
     @Override
@@ -63,7 +71,14 @@ public class SettingFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        ButterKnife.bind(this, view);
         return view;
+    }
+
+    @OnClick(R.id.category_dialog)
+    public void onClickCategoryDialog(View v) {
+        CategoryDialog categoryDialog = new CategoryDialog();
+        categoryDialog.show(getFragmentManager(), "categoryDialog");
     }
 
 }

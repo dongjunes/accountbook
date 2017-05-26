@@ -1,12 +1,14 @@
 package com.hipo.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +16,19 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hipo.lookie.R;
 import com.hipo.model.pojo.AddedListVo;
 import com.hipo.utils.AddedListVoFunction;
-import com.hipo.utils.GetDateLocationThread;
+import com.hipo.utils.GetListVoByDateThread;
 import com.hipo.utils.GetMyLocationThread;
 
 import java.util.List;
@@ -40,8 +45,9 @@ import butterknife.OnItemSelected;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private Handler locHandler, getListLocHandler;
-    private GetDateLocationThread getDateLocationThread;
-
+    private GetListVoByDateThread getListVoByDateThread;
+    private Marker purchasingMarker[];
+    private static View view;
     @BindView(R.id.myLocBtn)
     Button myLocBtn;
     @BindView(R.id.year_spinner)
@@ -50,6 +56,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     Spinner monthSpinner;
 
     public MapFragment() {
+
         // Required empty public constructor
     }
 
@@ -64,15 +71,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = null;
-        view = inflater.inflate(R.layout.fragment_map, container, false);
+        try {
+            view = inflater.inflate(R.layout.fragment_map, container, false);
+        } catch (InflateException e) {
+            // 구글맵 View가 이미 inflate되어 있는 상태이므로, 에러를 무시합니다.
+            Log.d("error무시", e.getMessage());
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -85,15 +91,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                List<AddedListVo> addedVoList = (List<AddedListVo>) msg.obj;
-                Log.d("addedVoList was fine?", addedVoList.toString());
-                //TODO 가져온 vo들을 좌표에 마커찍고 마커클릭시 vo정보 보여줌.
+                setPurchasingMarker(msg);
             }
         };
-        getDateLocationThread = new GetDateLocationThread(getListLocHandler, yearMonth);
-        getDateLocationThread.run();
+        getListVoByDateThread = new GetListVoByDateThread(getListLocHandler, yearMonth);
+        getListVoByDateThread.start();
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+
     }
 
     @Override
@@ -135,12 +151,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                List<AddedListVo> addedVoList = (List<AddedListVo>) msg.obj;
-                Log.d("addedVoList was fine?", addedVoList.toString());
+                setPurchasingMarker(msg);
             }
         };
-        getDateLocationThread = new GetDateLocationThread(getListLocHandler, yearMonth);
-        getDateLocationThread.run();
+        getListVoByDateThread = new GetListVoByDateThread(getListLocHandler, yearMonth);
+        getListVoByDateThread.start();
     }
 
     @OnItemSelected(R.id.month_spinner)
@@ -152,17 +167,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                List<AddedListVo> addedVoList = (List<AddedListVo>) msg.obj;
-                Log.d("addedVoList was fine?", addedVoList.toString());
+                setPurchasingMarker(msg);
             }
         };
-        getDateLocationThread = new GetDateLocationThread(getListLocHandler, yearMonth);
-        getDateLocationThread.run();
+        getListVoByDateThread = new GetListVoByDateThread(getListLocHandler, yearMonth);
+        getListVoByDateThread.start();
     }
+
 
     public void settingMap(Double[] latLng) {
         LatLng myLocation = new LatLng(latLng[0], latLng[1]);
-        mMap.addMarker(new MarkerOptions().position(myLocation).title("현재 내위치"));
+        //mMap.addMarker(new MarkerOptions().position(myLocation).title("현재 내위치"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
     }
 
@@ -195,4 +210,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    public void setPurchasingMarker(Message msg) {
+        mMap.clear();
+        final List<AddedListVo> addedVoList = (List<AddedListVo>) msg.obj;
+        Log.d("addedVoList was fine?", addedVoList.toString());
+        purchasingMarker = new Marker[addedVoList.size()];
+        for (int i = 0; i < purchasingMarker.length; i++) {
+            Log.d("purchasing success", "Marker" + addedVoList.get(i).getLocationX() + " " + addedVoList.get(i).getLocationY());
+
+            try {
+                purchasingMarker[i] = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(Double.parseDouble(addedVoList.get(i).getLocationX()), Double.parseDouble(addedVoList.get(i).getLocationY())))
+                        .title(addedVoList.get(i).getName())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+                purchasingMarker[i].setTag(i);
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        CameraUpdate center = CameraUpdateFactory.newLatLng(marker.getPosition());
+                        mMap.animateCamera(center);
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                        dialog.setTitle("상세정보");
+                        AddedListVo listVo = addedVoList.get((Integer) marker.getTag());
+                        dialog.setMessage(listVo.getName() + " : " + AddedListVoFunction.convertForForm(listVo.getMoney()) + "\n" + listVo.getDate_day());
+                        dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+                        return true;
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("위치가 저장되지 않은 정보입니다.", e.getMessage());
+            }
+        }
+    }
 }

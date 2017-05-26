@@ -13,8 +13,10 @@ import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.hipo.component.service.MyService;
 import com.hipo.model.NetworkTask2;
+import com.hipo.model.pojo.AddedListVo;
 import com.hipo.model.pojo.ListVo;
 import com.hipo.model.pojo.UserVo;
+import com.hipo.utils.AddedListVoFunction;
 import com.hipo.utils.GetMyLocationThread;
 import com.hipo.utils.MessageParsingThread;
 
@@ -95,7 +97,7 @@ public class BroadCast extends BroadcastReceiver {
         listVo = new ListVo();
         listVo.setId(userId = Profile.getCurrentProfile().getId());
         listVo.setBank(arr[0]);
-        listVo.setMoney(arr[1]);
+        listVo.setMoney(AddedListVoFunction.convertMoney(arr[1]));
         listVo.setDay(arr[2]);
         listVo.setName(arr[3]);
         listVo.setPaid("카드");
