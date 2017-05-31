@@ -5,7 +5,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.facebook.Profile;
-import com.google.gson.JsonObject;
 import com.hipo.model.NetworkTask2;
 
 import org.json.JSONException;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by dongjune on 2017-05-25.

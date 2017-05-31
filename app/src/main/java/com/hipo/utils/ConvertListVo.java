@@ -14,7 +14,7 @@ public class ConvertListVo {
         listVo.setName(addedListVo.getName());
         listVo.setCategory(addedListVo.getCategory());
         listVo.setPaid(addedListVo.getPaid());
-        listVo.setMoney(Integer.parseInt(addedListVo.getMoney()));
+        listVo.setMoney(AddedListVoFunction.convertMoney(addedListVo.getMoney()));
         listVo.setBank(addedListVo.getBank());
         listVo.setDay(addedListVo.getDay());
         listVo.setId(addedListVo.getId());

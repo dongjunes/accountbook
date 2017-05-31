@@ -28,15 +28,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"></Spinner>
 
+            <Spinner
+                android:id="@+id/chart_assortment_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></Spinner>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/payed_money_text"
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="20" />
-
-
+            android:layout_weight="80" />
     </LinearLayout>
 
 </FrameLayout>

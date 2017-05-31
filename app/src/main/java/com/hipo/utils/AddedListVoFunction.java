@@ -162,7 +162,6 @@ public class AddedListVoFunction {
             return true;
         } catch (Exception e) {
             return false;
-            // TODO: handle exception
         }
     }
 }

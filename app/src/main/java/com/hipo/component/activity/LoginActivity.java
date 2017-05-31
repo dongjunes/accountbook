@@ -68,15 +68,18 @@ public class LoginActivity extends Activity {
                                 vo.setId(object.get("id") + "");
                                 vo.setName(object.get("name") + "");
                                 vo.setPassword(vo.getId());
-                                vo.setEmail(object.get("email") + "");
-                                vo.setGender(object.get("gender") + "");
-                                vo.setAge(object.getJSONObject("age_range").get("min") + "");
-
+                                if (object.get("gender").equals(null)) {
+                                    vo.setGender("성별미설정");
+                                } else {
+                                    vo.setGender(object.get("gender") + "");
+                                }
+                                vo.setAge(object.getJSONObject("age_range").get("max") + "");
                                 if (vo.getAge().equals("")) {
                                     vo.setAge(object.getJSONObject("age_range").get("min") + "");
 
                                 } else {
                                     Log.d("나이가 없습니다 ", "ㅎㅎ");
+                                    vo.setAge("0");
                                 }
 
                             } catch (JSONException e) {
@@ -146,15 +149,15 @@ public class LoginActivity extends Activity {
                         */
                 if (shouldShowRequestPermissionRationale(Manifest.permission.RECEIVE_SMS)) {
                     Log.d("permissionCheck", "3");
-                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECEIVE_SMS,Manifest.permission.ACCESS_FINE_LOCATION},0);
-
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
                     finish();
+
                 }
 
                 //최초로 권한을 요청할 때
                 else {
                     // CALL_PHONE 권한을 Android OS 에 요청한다.
-                    requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, 1000);
+                    requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
                 }
 
             }

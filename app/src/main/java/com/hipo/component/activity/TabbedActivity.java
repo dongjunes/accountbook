@@ -13,6 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -106,11 +108,10 @@ public class TabbedActivity extends AppCompatActivity implements SettingDataCall
             task2 = new NetworkTask2(vo.getId(), 1);
             Map<String, String> params = new HashMap<String, String>();
             params.put("id", vo.getId());
-            params.put("gender", vo.getGender());
             params.put("name", vo.getName());
-            params.put("email", vo.getEmail());
             params.put("password", vo.getPassword());
             params.put("age", vo.getAge());
+            params.put("gender", vo.getGender());
 
             task2.execute(params);
         }

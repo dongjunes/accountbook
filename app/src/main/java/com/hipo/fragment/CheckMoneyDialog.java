@@ -9,6 +9,9 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,8 +45,16 @@ public class CheckMoneyDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.check_money_dialog_fragment, null);
+
         builder.setView(v);
         ButterKnife.bind(this, v);
+
+        AlertDialog dialog = builder.create();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        dialog.show();
         int[] yearMonth = settingDefalutYearMonth();
         paidSumHandler = new Handler() {
             @Override
@@ -55,7 +66,7 @@ public class CheckMoneyDialog extends DialogFragment {
         paidSumThread = new GetPaidSumThread(paidSumHandler, yearMonth);
         paidSumThread.start();
 
-        return builder.create();
+        return dialog;
     }
 
     public int[] settingDefalutYearMonth() {

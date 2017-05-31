@@ -4,14 +4,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import com.hipo.model.NetworkTask2;
 import com.hipo.model.pojo.AddedListVo;
-import com.hipo.model.pojo.ListVo;
 
-import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

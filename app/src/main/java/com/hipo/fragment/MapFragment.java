@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,6 +73,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toast.makeText(getContext(), "gps를 켜지 않을 시 지도를 이용한 서비스를 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
         try {
             view = inflater.inflate(R.layout.fragment_map, container, false);
         } catch (InflateException e) {

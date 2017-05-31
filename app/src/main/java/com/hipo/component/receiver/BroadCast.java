@@ -49,10 +49,15 @@ public class BroadCast extends BroadcastReceiver {
                     super.handleMessage(msg);
 
                     String arr[] = (String[]) msg.obj;
-                    for (int i = 0; i < arr.length; i++) {
-                        Log.d("BroadCast 확인중" + i, arr[i]);
+                    try {
+                        for (int i = 0; i < arr.length; i++) {
+                            Log.d("BroadCast 확인중" + i, arr[i]);
+                        }
+                        sharingServer(arr);
+                    } catch (NullPointerException e) {
+                        Log.d("BroadCastReceiver", "가계부관련 문자가 아닙니다.");
                     }
-                    sharingServer(arr);
+
                 }
             };
             MessageParsingThread dataThread = new MessageParsingThread(messageHandler, message);
