@@ -181,7 +181,7 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
                     Toast.makeText(getContext(), "숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                listVo.setMoney(moneyEdit.getText().toString());
+                listVo.setMoney(AddedListVoFunction.convertForForm(moneyEdit.getText().toString()));
                 listVo.setName(nameEdit.getText().toString());
                 listVo.setPaid((String) moneySpinner.getSelectedItem());
                 listVo.setCategory((String) categorySpinner.getSelectedItem());
@@ -194,7 +194,8 @@ public class MyDialogFragment extends DialogFragment implements CalendarToDialog
                 nameText.setText(listVo.getName());
 
                 moneyEdit.setVisibility(View.INVISIBLE);
-                moneyText.setText(AddedListVoFunction.convertForForm(listVo.getMoney()));
+                moneyText.setText(listVo.getMoney());
+                wonText.setVisibility(View.INVISIBLE);
 
                 paidText.setText(listVo.getPaid());
                 categoryText.setText(listVo.getCategory());

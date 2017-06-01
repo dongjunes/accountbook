@@ -144,7 +144,7 @@ public class AddedListVoFunction {
     }
 
     public static List<AddedListVo> pasingToList(String jsonData) {
-        String[] st = jsonData.split("\"ListVo[0-9]\":");
+        String[] st = jsonData.split("\"ListVo[0-9]{1,3}\":");
         Gson gson = new Gson();
         List<AddedListVo> list = new ArrayList<AddedListVo>();
         for (int i = 1; i < st.length; i++) {

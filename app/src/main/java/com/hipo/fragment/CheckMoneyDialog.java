@@ -33,6 +33,7 @@ public class CheckMoneyDialog extends DialogFragment {
 
     private Handler paidSumHandler;
     private GetPaidSumThread paidSumThread;
+    private boolean done = true;
     @BindView(R.id.check_money_text)
     TextView textView;
     @BindView(R.id.check_year_spinner)
@@ -56,16 +57,18 @@ public class CheckMoneyDialog extends DialogFragment {
         dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
         dialog.show();
         int[] yearMonth = settingDefalutYearMonth();
-        paidSumHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                setUI(msg);
-            }
-        };
-        paidSumThread = new GetPaidSumThread(paidSumHandler, yearMonth);
-        paidSumThread.start();
-
+        if (done) {
+            paidSumHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    setUI(msg);
+                }
+            };
+            paidSumThread = new GetPaidSumThread(paidSumHandler, yearMonth);
+            paidSumThread.start();
+            done = false;
+        }
         return dialog;
     }
 
