@@ -39,8 +39,9 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
+            android:layout_margin="10sp"
             android:layout_height="0dip"
-            android:layout_weight="80" />
+            android:layout_weight="90" />
     </LinearLayout>
 
 </FrameLayout>
