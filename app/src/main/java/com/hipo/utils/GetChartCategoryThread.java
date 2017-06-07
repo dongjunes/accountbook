@@ -29,8 +29,10 @@ import java.util.concurrent.ExecutionException;
 
 public class GetChartCategoryThread extends Thread {
     private Handler handler;
+    private int yearMonth[];
 
-    public GetChartCategoryThread(Handler handler) {
+    public GetChartCategoryThread(Handler handler, int yearMonth[]) {
+        this.yearMonth = yearMonth;
         this.handler = handler;
     }
 
@@ -49,8 +51,12 @@ public class GetChartCategoryThread extends Thread {
 
     private String getDataFromServer() throws ExecutionException, InterruptedException {
         NetworkTask2 task2 = new NetworkTask2(Profile.getCurrentProfile().getId(), 13);
-        return task2.execute(new HashMap<String, String>()).get();
+        Map<String, String> params = new HashMap<>();
+        params.put("year", yearMonth[0] + "");
+        params.put("month", yearMonth[1] + "");
+        return task2.execute(params).get();
     }
+
 
     private List<AndroidCategoryChartVo> jsonParsing(String parsingData) {
         String category;

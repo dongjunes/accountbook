@@ -58,5 +58,9 @@
         <item>2016년</item>
         <item>2017년</item>
     </string-array>
+    <string-array name="assortment_spinner">
+        <item>카테고리별</item>
+        <item>예산,소비별</item>
+    </string-array>
 
 </resources>
