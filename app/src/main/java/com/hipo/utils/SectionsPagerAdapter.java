@@ -37,9 +37,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return listFragment = ListFragment.newInstance(position + 1, vo);
             case 1:
-                return MapFragment.newInstance(position + 2);
+                return ChartFragment.newInstance(position + 2);
             case 2:
-                return ChartFragment.newInstance(position + 3);
+                return MapFragment.newInstance(position + 3);
             case 3:
                 return SettingFragment.newInstance(position + 4);
         }
