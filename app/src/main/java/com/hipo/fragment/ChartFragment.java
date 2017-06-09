@@ -16,14 +16,19 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hipo.lookie.R;
 import com.hipo.model.pojo.AndroidCategoryChartVo;
+import com.hipo.model.pojo.GraphVo;
 import com.hipo.utils.AddedListVoFunction;
 import com.hipo.utils.DecimalRemover;
 import com.hipo.utils.GetBarChartThread;
@@ -49,11 +54,13 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
     private Handler categoryHandler, limitHandler;
     private PieData data;
     private List<AndroidCategoryChartVo> categoryChartList;
-    private ArrayList<Entry> yValsPie, yValsBar;
+    private ArrayList<Entry> yValsPie;
+    private ArrayList<BarEntry> yValsBar1, yValsBar2;
+    private ArrayList<IBarDataSet> barDataSets;
     private ArrayList<String> xValsPie, xValsBar;
     private Map<Integer, Integer> changePercentToMoney;
     private PieDataSet pDataSet;
-    private boolean chartInitDone = true;
+    private boolean pieChartInitDone = true, barChartinitDone = true;
     private boolean[] divChart = new boolean[2];
     @BindView(R.id.chart_year_spinner)
     Spinner yearSpinner;
@@ -108,7 +115,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
     private void initChartSet(Message msg) {
         Log.d("CategoryListSum!", msg.obj.toString());
         categoryChartList = (List) msg.obj;
-        if (chartInitDone) {
+        if (pieChartInitDone) {
             yValsPie = new ArrayList<>();
             xValsPie = new ArrayList<>();
         }
@@ -148,12 +155,13 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
                 xValsPie.add(index++, vo.getCategory());
                 changePercentToMoney.put(getPercent(vo.getSum(), sum), vo.getSum());
                 Log.d("pqpqVo", vo + "");
+                Log.d("pqpqMapCheck", changePercentToMoney.toString());
             }
         }
 
         Log.d("ChartSumVal", sum + "");
         chartInit(yValsPie, xValsPie);
-        chartInitDone = false;
+        pieChartInitDone = false;
 
         data.notifyDataChanged();
         pieChart.notifyDataSetChanged();
@@ -214,7 +222,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
             chartCategoryThread.run();
         } else {
             Log.d("else입니다", "^^");
-
+            getBarChartData(yearMonth);
         }
 
     }
@@ -225,18 +233,23 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
         yearMonth[0] = Integer.parseInt(yearSpinner.getAdapter().getItem(yearSpinner.getSelectedItemPosition()).toString());
         yearMonth[1] = monthSpinner.getSelectedItemPosition() + 1;
         if (divChart[0]) {
-            categoryHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    updatePieChart(msg);
-                }
-            };
-            GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth);
-            chartCategoryThread.run();
+            getPieChartData(yearMonth);
         } else {
+            getBarChartData(yearMonth);
             Log.d("else입니다", "^^");
         }
+    }
+
+    private void getPieChartData(int yearMonth[]) {
+        categoryHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                updatePieChart(msg);
+            }
+        };
+        GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth);
+        chartCategoryThread.run();
     }
 
     private void updatePieChart(Message msg) {
@@ -252,19 +265,15 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
         }
         try {
             if (categoryChartList.size() <= 5) {
-                xValsPie.clear();
-                yValsPie.clear();
                 for (int i = 0; i < categoryChartList.size(); i++) {
                     if (getPercent(categoryChartList.get(i).getSum(), sum) > 0) {
-                        Log.d("percentage", getPercent(categoryChartList.get(i).getSum(), sum) + "");
+                        Log.d("percentage3", getPercent(categoryChartList.get(i).getSum(), sum) + "");
                         yValsPie.add(setYEntry(getPercent(categoryChartList.get(i).getSum(), sum), index));
                         xValsPie.add(index++, categoryChartList.get(i).getCategory());
                         changePercentToMoney.put(getPercent(categoryChartList.get(i).getSum(), sum), categoryChartList.get(i).getSum());
                     }
                 }
             } else {
-                xValsPie.clear();
-                yValsPie.clear();
                 //5개 이상일 경우 처리
                 PriorityQueue<AndroidCategoryChartVo> pq = new PriorityQueue<>();
                 for (int i = 0; i < categoryChartList.size(); i++) {
@@ -273,11 +282,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
                         Log.d("pqpqADDED", categoryChartList.get(i).getSum() + "");
                     }
                 }
-            /*Log.d("pqpqVo", pq.poll() + "");
 
-            PriorityQueue<AndroidCategoryChartVo> reversedPriorityQueue = new PriorityQueue<>(pq.size(), Collections.reverseOrder());
-            reversedPriorityQueue.addAll(pq);
-*/
                 AndroidCategoryChartVo vo;
                 for (int i = 0; i < 5; i++) {
                     vo = pq.poll();
@@ -347,7 +352,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
     public void onValueSelected(Entry e, int pDataSetIndex, Highlight h) {
         int sum = 0;
         for (int i = 0; i < yValsPie.size(); i++) {
-            sum = changePercentToMoney.get((int) yValsPie.get(i).getVal());
+            sum = changePercentToMoney.get(Integer.valueOf((int) yValsPie.get(i).getVal()));
             yValsPie.get(i).setVal(sum);
             pDataSet.setValueFormatter(new com.hipo.utils.DefaultValueFormatter(0));
         }
@@ -360,21 +365,50 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
         xValsPie.clear();
         yValsPie.clear();
         int sum = 0;
+        int count = 0;
+        Log.e("ErrorChecking", categoryChartList.toString());
         for (int i = 0; i < categoryChartList.size(); i++) {
             if (categoryChartList.get(i).getSum() != 0) {
                 sum += categoryChartList.get(i).getSum();
             }
         }
+        //TODO 5개 고르기
+
         for (int i = 0; i < categoryChartList.size(); i++) {
             if (getPercent(categoryChartList.get(i).getSum(), sum) > 0) {
-                tempList.add(categoryChartList.get(i));
+                tempList.add(count++, categoryChartList.get(i));
             }
         }
+        if(tempList.size()<=5){
         for (int i = 0; i < tempList.size(); i++) {
             Log.d("percentage", getPercent(tempList.get(i).getSum(), sum) + "");
             yValsPie.add(setYEntry(getPercent(tempList.get(i).getSum(), sum), i));
             xValsPie.add(tempList.get(i).getCategory());
             changePercentToMoney.put(getPercent(tempList.get(i).getSum(), sum), tempList.get(i).getSum());
+        }
+
+        }else{
+            PriorityQueue<AndroidCategoryChartVo> pq = new PriorityQueue<>();
+            for (int i = 0; i < categoryChartList.size(); i++) {
+                if (getPercent(categoryChartList.get(i).getSum(), sum) > 0) {
+                    Log.d("InsertPQ?", categoryChartList.get(i) + "");
+                    pq.add(categoryChartList.get(i));
+                    Log.d("pqpqADDEDNotSelect", categoryChartList.get(i).getSum() + "");
+                }
+            }
+            Log.d("PQNULLCHECK",pq.toString());
+            int index = 0;
+            AndroidCategoryChartVo vo;
+            for (int i = 0; i < 5; i++) {
+                vo = pq.poll();
+                Log.d("CheckingPQ", vo + "");
+                yValsPie.add(setYEntry(getPercent(vo.getSum(), sum), index));
+                xValsPie.add(index++, vo.getCategory());
+                changePercentToMoney.put(getPercent(vo.getSum(), sum), vo.getSum());
+                Log.d("notingSelectpqpqVo!!@!@", vo + "");
+                Log.d("pqpqMapCheck", changePercentToMoney.toString());
+            }
+
         }
         data.setValueFormatter(new PercentFormatter());
         data.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
@@ -414,10 +448,71 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
         assortmentSpinner.setSelection(0);
     }
 
-    private void barChartInit() {
+    private void barChartInit(List<GraphVo> barList) {
+        barValInit(barChartinitDone);
+        setBarChartData(barList);
+        BarData bData = new BarData(xValsBar, barDataSets);
+        barChart.setData(bData);
+        barChart.setDescription("");
+        barChart.animateXY(2000, 2000);
+        barChart.invalidate();
+    }
+
+    private void barValInit(boolean barChartinitDone) {
+        if (barChartinitDone) {
+            xValsBar = new ArrayList<>();
+            yValsBar2 = new ArrayList<>();
+            yValsBar1 = new ArrayList<>();
+            barDataSets = new ArrayList<>();
+            this.barChartinitDone = false;
+        } else {
+            xValsBar.clear();
+            yValsBar2.clear();
+            yValsBar1.clear();
+            barDataSets.clear();
+        }
+    }
+
+    private void setBarChartData(List<GraphVo> barList) {
+        List<GraphVo> pointBarList = new ArrayList<>();
+        GraphVo vo = null;
+        int count = 0;
+        for (int i = 0; i < barList.size(); i++) {
+            vo = barList.get(i);
+            if (!(vo.getMl() == 0 || vo.getLsum() == 0)) {
+                pointBarList.add(vo);
+                yValsBar1.add(getEntry(vo.getMl(), count));
+                yValsBar2.add(getEntry(vo.getLsum(), count));
+                xValsBar.add(vo.getCategory());
+                count++;
+            }
+        }
+        Log.d("CheckingPointVo", pointBarList.toString());
+
+        BarDataSet barDataSet1 = new BarDataSet(yValsBar1, "금액한도");
+        BarDataSet barDataSet2 = new BarDataSet(yValsBar2, "사용금액");
+        barDataSet1.setColor(Color.rgb(80, 208, 255));
+        barDataSet2.setColor(Color.rgb(80, 255, 241));
+        barDataSet1 = barDataFormatSet(barDataSet1);
+        barDataSet2 = barDataFormatSet(barDataSet2);
+        barDataSets.add(barDataSet1);
+        barDataSets.add(barDataSet2);
+
+        //barChart.getXAxis().setEnabled(false);
+        //barChart.getAxisLeft().setEnabled(false);
+        //barChart.getAxisRight().setEnabled(false);
 
     }
 
+    private BarDataSet barDataFormatSet(BarDataSet data) {
+        data.setValueFormatter(new com.hipo.utils.DefaultValueFormatter(0));
+        data.setValueTextSize(8);
+        return data;
+    }
+
+    private BarEntry getEntry(Integer val, int i) {
+        return new BarEntry(val, i);
+    }
 
     private void getBarChartData(int yearMonth[]) {
         limitHandler = new Handler() {
@@ -425,9 +520,10 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 Log.d("nowCheckingBarChartData", msg.obj.toString());
+                barChartInit((List<GraphVo>) msg.obj);
             }
         };
-        GetBarChartThread barChartThread=new GetBarChartThread(limitHandler,yearMonth);
+        GetBarChartThread barChartThread = new GetBarChartThread(limitHandler, yearMonth);
         barChartThread.start();
     }
 
