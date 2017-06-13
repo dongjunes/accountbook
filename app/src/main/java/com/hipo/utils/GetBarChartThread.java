@@ -54,13 +54,17 @@ public class GetBarChartThread extends Thread {
     }
 
     private List<GraphVo> jsonParsing(String jsonData) throws JSONException {
-        JSONArray jsonArray = new JSONArray(jsonData);
-        List<GraphVo> barList = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            barList.add(i, jsonObjectToVo(jsonObject));
+        try {
+            JSONArray jsonArray = new JSONArray(jsonData);
+            List<GraphVo> barList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                barList.add(i, jsonObjectToVo(jsonObject));
+            }
+            return barList;
+        } catch (Exception e) {
+            return null;
         }
-        return barList;
     }
 
     private GraphVo jsonObjectToVo(JSONObject object) {

@@ -2,6 +2,7 @@ package com.hipo.component.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -146,6 +147,7 @@ public class TabbedActivity extends AppCompatActivity implements SettingDataCall
         tabLayout.getTabAt(1).setIcon(R.mipmap.graph);
         tabLayout.getTabAt(2).setIcon(R.mipmap.loc);
         tabLayout.getTabAt(3).setIcon(R.mipmap.setting);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#D1E4E6"));
     }
 
 

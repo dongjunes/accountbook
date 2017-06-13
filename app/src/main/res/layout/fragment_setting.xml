@@ -24,7 +24,19 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
-
+        <Button
+            android:id="@+id/category_money_limit_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:layout_weight="10"
+            android:background="#1b9480"
+            android:gravity="center"
+            android:text="category한도설정"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
         <com.facebook.login.widget.LoginButton
             android:id="@+id/loginbtn"
             android:layout_width="match_parent"

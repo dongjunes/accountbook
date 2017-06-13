@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="15"
                     android:layout_marginRight="15dp"
-                    android:background="@mipmap/checkmoney"
+                    android:background="@mipmap/money"
                     android:scaleType="fitXY" />
 
                 <ImageView

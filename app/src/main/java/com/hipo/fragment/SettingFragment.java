@@ -33,6 +33,8 @@ public class SettingFragment extends Fragment {
     private SettingDataCallback callback;
     @BindView(R.id.category_dialog)
     Button categoryDialog;
+    @BindView(R.id.category_money_limit_dialog)
+    Button moneyLimitDialog;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -79,6 +81,12 @@ public class SettingFragment extends Fragment {
     public void onClickCategoryDialog(View v) {
         CategoryDialog categoryDialog = new CategoryDialog();
         categoryDialog.show(getFragmentManager(), "categoryDialog");
+    }
+
+    @OnClick(R.id.category_money_limit_dialog)
+    public void onClickLimitDialog(View v) {
+        MoneyLimitDialog moneyLimitDialog = new MoneyLimitDialog();
+        moneyLimitDialog.show(getFragmentManager(), "moneyLimitDialog");
     }
 
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.hipo.fragment.CategoryDialog">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="100">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -53,19 +54,19 @@
                 android:id="@+id/category_delete_spinner"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="5sp"
-                android:layout_weight="20"
-                android:layout_gravity="center"></Spinner>
+                android:layout_weight="20"></Spinner>
 
             <Button
                 android:id="@+id/category_delete_btn"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="5sp"
                 android:layout_weight="10"
                 android:text="삭제하기"
-                android:textSize="15sp"
-                android:layout_gravity="center"/>
+                android:textSize="15sp" />
 
         </LinearLayout>
 

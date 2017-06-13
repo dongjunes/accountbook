@@ -15,26 +15,25 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_marginBottom="15sp"
-            android:layout_weight="100"
+            android:layout_weight="80"
             android:gravity="right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1000">
 
             <ImageView
                 android:id="@+id/delete_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@mipmap/delete"
-                android:scaleType="fitXY"/>
-
-            <LinearLayout
-                android:layout_width="10sp"
-                android:layout_height="match_parent"></LinearLayout>
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="150"
+                android:background="@mipmap/basket"
+                android:scaleType="fitXY" />
 
             <ImageView
                 android:id="@+id/modify_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@mipmap/pen"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="150"
+                android:background="@mipmap/modify"
                 android:scaleType="fitXY"
                 android:text="modify" />
         </LinearLayout>

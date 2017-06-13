@@ -93,7 +93,7 @@ public class CalendarFragment extends DialogFragment {
             case 1:
                 year = 2017;
         }
-        month=position + 1;
+        month = position + 1;
         countingDate(month, year);
     }
 
@@ -130,6 +130,7 @@ public class CalendarFragment extends DialogFragment {
             year = (calendar.get(Calendar.YEAR));
             Log.d("year", year + "");
         }
+
         dateText.setText(year + "/" + month);
         dateList = new ArrayList<String>();
         dateList.add("일");
@@ -140,14 +141,15 @@ public class CalendarFragment extends DialogFragment {
         dateList.add("금");
         dateList.add("토");
 
-        calendar.set(year, month, 1);
+        calendar.set(year, month - 1, 1);
+
         int dayNum = calendar.get(Calendar.DAY_OF_WEEK);
 
         for (int i = 1; i < dayNum; i++) {
             dateList.add("");
         }
         //setCalendarDate(calendar.get(Calendar.MONTH) + 1);
-        setCalendarDate(month);
+        setCalendarDate(calendar.get(Calendar.MONTH));
         monthSpinner.setSelection(month - 1);
         adapter = new GridViewAdapter(getContext(), dateList);
 
@@ -155,8 +157,7 @@ public class CalendarFragment extends DialogFragment {
     }
 
     private void setCalendarDate(int month) {
-        calendar.set(month, month - 1);
-
+        calendar.set(Calendar.MONTH, month - 1);
         for (int i = 0; i < calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             dateList.add("" + (i + 1));
         }

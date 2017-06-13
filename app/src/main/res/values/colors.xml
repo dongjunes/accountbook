@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#25CFBE</color>
     <color name="colorPrimaryDark">#1b9488</color>
-    <color name="colorAccent">#D1E4E6</color>
+    <color name="colorAccent">#3c9ca6</color>
+    <color name="colorSelectAccent">#D1E4E6</color>
     <color name="colorDeepRed">#CC0303</color>
     <color name="colorSelected">#25CFBE</color>
     <color name="colorNoSelected">#1b9488</color>
