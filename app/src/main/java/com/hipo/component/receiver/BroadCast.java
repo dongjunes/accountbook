@@ -41,8 +41,9 @@ public class BroadCast extends BroadcastReceiver {
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
             Log.d("BroadCast", "문자가 왔어요 ㅎ");
             String message = messageContent(intent);
-            Log.d("BroadCast", "문자 데이터 :" + message);
 
+            Log.d("BroadCast", "문자 데이터 :" + message);
+            System.out.println(message);
             messageHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {

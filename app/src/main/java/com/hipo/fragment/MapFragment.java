@@ -48,6 +48,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private Handler locHandler, getListLocHandler;
     private GetListVoByDateThread getListVoByDateThread;
     private Marker purchasingMarker[];
+    private boolean modifyDone = true;
     private static View view;
     @BindView(R.id.myLocBtn)
     Button myLocBtn;
@@ -73,7 +74,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Toast.makeText(getContext(), "gps를 켜지 않을 시 지도를 이용한 서비스를 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
         try {
             view = inflater.inflate(R.layout.fragment_map, container, false);
         } catch (InflateException e) {
@@ -100,6 +100,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         getListVoByDateThread.start();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (modifyDone) {
+            Toast.makeText(getContext(), "gps를 켜지 않을 시 지도를 이용한 서비스를 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+            modifyDone = false;
+        }
     }
 
     @Override

@@ -8,6 +8,11 @@
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="appName">편한가계부</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="money">금액</string>
+    <string name="paid">결제방식</string>
+    <string name="name">지출내역</string>
+    <string name="category">분류</string>
+    <string name="date">날짜</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

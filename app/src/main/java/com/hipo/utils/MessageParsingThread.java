@@ -34,23 +34,46 @@ public class MessageParsingThread extends Thread {
             arr[0] = m.group(1);
         }
 
-        for (int i = 1; i < arr.length; i++) {
-            switch (i) {
-                case 1:
-                    p = Pattern.compile("\\) (.*?)\\.");//금액
-                    break;
-                case 2:
-                    p = Pattern.compile("\\. (.*?)\\. ");//시간
-                    break;
-                case 3:
-                    p = Pattern.compile("원 (.*?)$");//상호명및위치
-                    break;
+        if (arr[0].equals("우체국")) {
+            for (int i = 1; i < arr.length; i++) {
+                switch (i) {
+                    case 1:
+                        p = Pattern.compile("\\) (.*?)\\.");//금액
+                        break;
+                    case 2:
+                        p = Pattern.compile("\\. (.*?)\\. ");//시간
+                        break;
+                    case 3:
+                        p = Pattern.compile("원 (.*?)$");//상호명및위치
+                        break;
+                }
+                m = p.matcher(textData);
+                if (m.find()) {
+                    arr[i] = m.group(1);
+                    //System.out.println(arr[i]);
+                }
             }
-            m = p.matcher(textData);
-            if (m.find()) {
-                arr[i] = m.group(1);
-                System.out.println(arr[i]);
+        } else if (arr[0].equals("신한체크승인")) {
+            arr[0] = "신한체크";
+            for (int i = 1; i < arr.length; i++) {
+                switch (i) {
+                    case 1:
+                        p = Pattern.compile("액\\)(.*?) ");
+                        break;
+                    case 2:
+                        p = Pattern.compile("\\*\\) (.*?) \\(");
+                        break;
+                    case 3:
+                        p = Pattern.compile("[0-9]원 (.*?)$");
+                        break;
+                }
+                m = p.matcher(textData);
+                if (m.find()) {
+                    arr[i] = m.group(1);
+                    System.out.println(arr[i]);
+                }
             }
+
         }
         putDataHandler(arr);
     }

@@ -6,27 +6,27 @@
     <LinearLayout
         android:id="@+id/check_popup_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="100">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/check_year_spinner"
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="40"
                 android:entries="@array/year_spinner"></Spinner>
 
             <TextView
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5sp"
                 android:layout_weight="10"
                 android:gravity="center"
@@ -36,14 +36,14 @@
             <Spinner
                 android:id="@+id/check_month_spinner"
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="40"
                 android:entries="@array/month_spinner"></Spinner>
 
             <TextView
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5sp"
                 android:layout_weight="10"
                 android:gravity="center"
@@ -54,7 +54,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="40"
             android:orientation="horizontal"
             android:weightSum="100">

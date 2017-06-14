@@ -102,12 +102,10 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
                 super.handleMessage(msg);
                 initChartSet(msg);
                 Log.d("ChartFragmentChecking", "okay");
-                if (xValsBar == null || yValsPie == null) {
-                    Toast.makeText(getContext(), "가계부내용을 추가하시면 이용가능합니다.", Toast.LENGTH_SHORT).show();
-                }
+
             }
         };
-        GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth);
+        GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth, getContext());
         chartCategoryThread.run();
 
 
@@ -228,7 +226,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
                     updatePieChart(msg);
                 }
             };
-            GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth);
+            GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth,getContext());
             chartCategoryThread.run();
         } else {
             Log.d("else입니다", "^^");
@@ -258,7 +256,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
                 updatePieChart(msg);
             }
         };
-        GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth);
+        GetChartCategoryThread chartCategoryThread = new GetChartCategoryThread(categoryHandler, yearMonth,getContext());
         chartCategoryThread.run();
     }
 

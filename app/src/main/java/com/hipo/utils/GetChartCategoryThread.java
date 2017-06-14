@@ -1,8 +1,10 @@
 package com.hipo.utils;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.google.gson.Gson;
@@ -30,10 +32,12 @@ import java.util.concurrent.ExecutionException;
 public class GetChartCategoryThread extends Thread {
     private Handler handler;
     private int yearMonth[];
+    private Context context;
 
-    public GetChartCategoryThread(Handler handler, int yearMonth[]) {
+    public GetChartCategoryThread(Handler handler, int yearMonth[], Context context) {
         this.yearMonth = yearMonth;
         this.handler = handler;
+        this.context = context;
     }
 
     @Override
@@ -45,6 +49,8 @@ public class GetChartCategoryThread extends Thread {
             Log.d("getDataFromServer", parsingData);
             settingMessage(jsonParsing(parsingData));
         } catch (Exception e) {
+            Toast.makeText(context, "가계부내용을 추가하시면 이용가능합니다.", Toast.LENGTH_SHORT).show();
+
             e.printStackTrace();
         }
     }

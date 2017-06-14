@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="1000">
 
@@ -9,20 +9,20 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="100"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1000">
 
         <LinearLayout
-            android:layout_width="100dip"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/ymtxt"
                 android:layout_width="match_parent"
-                android:layout_height="20dip"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="17.04"
                 android:textColor="#200000"
@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/dtxt"
                 android:layout_width="match_parent"
-                android:layout_height="50dip"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="30"
                 android:textColor="#000000"
@@ -41,7 +41,7 @@
             <TextView
                 android:id="@+id/category"
                 android:layout_width="match_parent"
-                android:layout_height="30dip"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="생활비"
                 android:textColor="#200000"
@@ -51,29 +51,35 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="270dip"
+            android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="100">
 
             <LinearLayout
-                android:layout_width="160dip"
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_weight="70"
+                android:orientation="vertical"
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:layout_height="70dip"
+                    android:layout_height="0dip"
+                    android:layout_weight="70"
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:singleLine="true"
+                    android:text="사용내역"
                     android:textColor="#200000"
                     android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/paid"
                     android:layout_width="match_parent"
-                    android:layout_height="30dip"
+                    android:layout_height="0dip"
+                    android:layout_weight="30"
                     android:text="생활비"
                     android:textColor="#200000"
                     android:textSize="15sp" />
@@ -83,9 +89,11 @@
 
             <TextView
                 android:id="@+id/money"
-                android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:layout_gravity="center"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|left"
+                android:layout_marginRight="10sp"
+                android:layout_weight="30"
                 android:gravity="center"
                 android:text="money"
                 android:textColor="#200000"
