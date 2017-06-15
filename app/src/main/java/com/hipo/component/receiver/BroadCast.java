@@ -61,7 +61,7 @@ public class BroadCast extends BroadcastReceiver {
 
                 }
             };
-            MessageParsingThread dataThread = new MessageParsingThread(messageHandler, message);
+            MessageParsingThread dataThread = new MessageParsingThread(messageHandler, message,context);
             dataThread.start();
 
         }

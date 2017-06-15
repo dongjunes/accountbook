@@ -30,35 +30,35 @@ public class NetworkTask2 extends AsyncTask<Map<String, String>, Integer, String
         HttpClient.Builder http;
         if (receive == 1) {
             Log.d("회원가입하고싶어요", "ㅎㅎㅎ");
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/join");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/join");
         } else if (receive == 2) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/login");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/login");
         } else if (receive == 3) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/addList");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/addList");
         } else if (receive == 4) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/getList");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/getList");
         } else if (receive == 5) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/updateList");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/updateList");
         } else if (receive == 6) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/addVo");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/addVo");
         } else if (receive == 7) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/deleteVo");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/deleteVo");
         } else if (receive == 8) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/location");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/location");
         } else if (receive == 9) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/addCategory");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/addCategory");
         } else if (receive == 10) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/getCategoryList");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/getCategoryList");
         } else if (receive == 11) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/deleteCategory");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/deleteCategory");
         } else if (receive == 12) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/getSumPaid");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/getSumPaid");
         } else if (receive == 13) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/findCategory");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/findCategory");
         } else if (receive == 14) {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/findLimit");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/findLimit");
         } else {
-            http = new HttpClient.Builder("POST", "http://121.138.83.53:6974/account-book/android/" + id + "/setLimitValue");
+            http = new HttpClient.Builder("POST", "http://121.138.83.53:9807/account-book/android/" + id + "/setLimitValue");
         }
 
 // Parameter 를 전송한다.
