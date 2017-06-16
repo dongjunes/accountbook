@@ -9,8 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -19,7 +17,7 @@ import android.widget.Toast;
 
 import com.hipo.lookie.R;
 import com.hipo.utils.AddedListVoFunction;
-import com.hipo.utils.GetPaidSumThread;
+import com.hipo.model.GetPaidSumThread;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

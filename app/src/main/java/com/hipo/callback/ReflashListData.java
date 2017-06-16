@@ -1,6 +1,6 @@
 package com.hipo.callback;
 
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 
 /**
  * Created by dongjune on 2017-05-02.

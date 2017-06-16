@@ -8,9 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.facebook.Profile;
 import com.hipo.component.receiver.BroadCast;
-import com.hipo.model.pojo.UserVo;
 
 /**
  * Created by dongjune on 2017-04-25.

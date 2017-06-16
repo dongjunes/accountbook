@@ -5,7 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 
 import java.util.ArrayList;
 import java.util.List;

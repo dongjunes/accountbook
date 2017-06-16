@@ -1,4 +1,4 @@
-package com.hipo.model.pojo;
+package com.hipo.pojo;
 
 import android.support.annotation.NonNull;
 

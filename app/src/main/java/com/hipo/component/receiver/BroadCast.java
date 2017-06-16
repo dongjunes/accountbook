@@ -12,12 +12,10 @@ import android.util.Log;
 import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.hipo.component.service.MyService;
-import com.hipo.model.NetworkTask2;
-import com.hipo.model.pojo.AddedListVo;
-import com.hipo.model.pojo.ListVo;
-import com.hipo.model.pojo.UserVo;
+import com.hipo.model.network.NetworkTask2;
+import com.hipo.pojo.ListVo;
 import com.hipo.utils.AddedListVoFunction;
-import com.hipo.utils.GetMyLocationThread;
+import com.hipo.model.GetMyLocationThread;
 import com.hipo.utils.MessageParsingThread;
 
 import java.util.Date;

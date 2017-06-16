@@ -1,11 +1,9 @@
-package com.hipo.model;
+package com.hipo.model.network;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.facebook.Profile;
-import com.hipo.model.pojo.UserVo;
-import com.hipo.network.HttpClient;
+import com.hipo.pojo.UserVo;
 
 import java.util.Map;
 

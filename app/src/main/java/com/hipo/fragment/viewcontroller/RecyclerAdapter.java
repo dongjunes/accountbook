@@ -1,4 +1,4 @@
-package com.hipo.model;
+package com.hipo.fragment.viewcontroller;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 import com.hipo.utils.AddedListVoFunction;
 
 import java.util.List;
@@ -125,7 +125,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         }
         for (int i = 0; i < date.length; i++) {
-            Log.d("date"+i,date[i]);
+            Log.d("date" + i, date[i]);
         }
         addedListVo.setDate_ym(date[0]);
         addedListVo.setDate_day(date[1]);

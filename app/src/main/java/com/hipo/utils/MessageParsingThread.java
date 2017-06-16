@@ -57,7 +57,7 @@ public class MessageParsingThread extends Thread {
                             p = Pattern.compile("\\. (.*?)\\. ");//시간
                             break;
                         case 3:
-                            p = Pattern.compile("원 (.*?)$");//상호명및위치
+                            p = Pattern.compile("[0-9]원 (.*?)$");//상호명및위치
                             break;
                     }
                     m = p.matcher(textData);
@@ -138,8 +138,8 @@ public class MessageParsingThread extends Thread {
                 }
             }
             putDataHandler(arr);
-        }catch (Exception e){
-            Log.d("parsingMessage","가계부관련문자가 아닙니다.");
+        } catch (Exception e) {
+            Log.d("parsingMessage", "가계부관련문자가 아닙니다.");
         }
     }
 

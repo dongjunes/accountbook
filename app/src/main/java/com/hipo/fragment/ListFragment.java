@@ -1,6 +1,5 @@
 package com.hipo.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,14 +16,13 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.facebook.Profile;
-import com.hipo.callback.ListDataCallback;
 import com.hipo.callback.ReflashListData;
 import com.hipo.callback.ShareEventAdapterToFragment;
 import com.hipo.lookie.R;
-import com.hipo.model.RecyclerAdapter;
-import com.hipo.model.pojo.AddedListVo;
-import com.hipo.model.pojo.UserVo;
-import com.hipo.utils.GetListDataThread;
+import com.hipo.fragment.viewcontroller.RecyclerAdapter;
+import com.hipo.pojo.AddedListVo;
+import com.hipo.pojo.UserVo;
+import com.hipo.model.GetListDataThread;
 import com.hipo.utils.SortingThread;
 
 import java.util.List;

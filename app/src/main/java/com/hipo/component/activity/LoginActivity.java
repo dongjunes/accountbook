@@ -2,14 +2,12 @@ package com.hipo.component.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,7 +21,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.hipo.lookie.R;
-import com.hipo.model.pojo.UserVo;
+import com.hipo.pojo.UserVo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +70,7 @@ public class LoginActivity extends Activity {
                                     vo.setGender("성별미설정");
                                 } else {
                                     vo.setGender(object.get("gender") + "");
+
                                 }
                                 vo.setAge(object.getJSONObject("age_range").get("max") + "");
                                 if (vo.getAge().equals("")) {

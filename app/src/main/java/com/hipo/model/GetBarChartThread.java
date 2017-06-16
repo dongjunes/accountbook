@@ -1,14 +1,12 @@
-package com.hipo.utils;
+package com.hipo.model;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.facebook.Profile;
 import com.google.gson.Gson;
-import com.hipo.model.NetworkTask2;
-import com.hipo.model.pojo.GraphVo;
-import com.hipo.model.pojo.ListVo;
+import com.hipo.model.network.NetworkTask2;
+import com.hipo.pojo.GraphVo;
 
 import org.json.JSONArray;
 import org.json.JSONException;

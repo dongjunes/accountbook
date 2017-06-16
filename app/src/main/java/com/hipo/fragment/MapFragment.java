@@ -27,10 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hipo.lookie.R;
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 import com.hipo.utils.AddedListVoFunction;
-import com.hipo.utils.GetListVoByDateThread;
-import com.hipo.utils.GetMyLocationThread;
+import com.hipo.model.GetListVoByDateThread;
+import com.hipo.model.GetMyLocationThread;
 
 import java.util.List;
 

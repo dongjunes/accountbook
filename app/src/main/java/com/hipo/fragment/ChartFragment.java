@@ -27,12 +27,12 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hipo.lookie.R;
-import com.hipo.model.pojo.AndroidCategoryChartVo;
-import com.hipo.model.pojo.GraphVo;
+import com.hipo.pojo.AndroidCategoryChartVo;
+import com.hipo.pojo.GraphVo;
 import com.hipo.utils.AddedListVoFunction;
 import com.hipo.utils.DecimalRemover;
-import com.hipo.utils.GetBarChartThread;
-import com.hipo.utils.GetChartCategoryThread;
+import com.hipo.model.GetBarChartThread;
+import com.hipo.model.GetChartCategoryThread;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

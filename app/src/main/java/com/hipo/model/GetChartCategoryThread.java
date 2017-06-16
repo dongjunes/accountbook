@@ -1,4 +1,4 @@
-package com.hipo.utils;
+package com.hipo.model;
 
 import android.content.Context;
 import android.os.Handler;
@@ -8,12 +8,8 @@ import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.hipo.model.NetworkTask2;
-import com.hipo.model.pojo.AddedListVo;
-import com.hipo.model.pojo.AndroidCategoryChartVo;
-import com.hipo.model.pojo.ListVo;
+import com.hipo.model.network.NetworkTask2;
+import com.hipo.pojo.AndroidCategoryChartVo;
 
 import org.json.JSONArray;
 import org.json.JSONException;

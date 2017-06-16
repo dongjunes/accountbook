@@ -1,4 +1,4 @@
-package com.hipo.network;
+package com.hipo.model.network;
 
 /**
  * Created by dongjune on 2017-04-21.

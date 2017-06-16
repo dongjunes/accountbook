@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 
 import java.io.StringReader;
 import java.util.ArrayList;

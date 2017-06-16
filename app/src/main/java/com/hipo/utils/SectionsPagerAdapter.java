@@ -9,7 +9,7 @@ import com.hipo.fragment.ChartFragment;
 import com.hipo.fragment.ListFragment;
 import com.hipo.fragment.MapFragment;
 import com.hipo.fragment.SettingFragment;
-import com.hipo.model.pojo.UserVo;
+import com.hipo.pojo.UserVo;
 
 /**
  * Created by dongjune on 2017-04-25.

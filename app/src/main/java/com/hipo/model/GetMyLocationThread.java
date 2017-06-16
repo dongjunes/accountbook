@@ -1,4 +1,4 @@
-package com.hipo.utils;
+package com.hipo.model;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

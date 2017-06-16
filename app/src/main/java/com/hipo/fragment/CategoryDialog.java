@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.hipo.lookie.R;
-import com.hipo.model.NetworkTask2;
-import com.hipo.utils.GetCategoryListThread;
+import com.hipo.model.network.NetworkTask2;
+import com.hipo.model.GetCategoryListThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;

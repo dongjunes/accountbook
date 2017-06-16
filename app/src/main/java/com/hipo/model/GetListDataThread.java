@@ -1,11 +1,11 @@
-package com.hipo.utils;
+package com.hipo.model;
 
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.hipo.model.NetworkTask2;
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.model.network.NetworkTask2;
+import com.hipo.pojo.AddedListVo;
 
 import java.util.HashMap;
 import java.util.List;

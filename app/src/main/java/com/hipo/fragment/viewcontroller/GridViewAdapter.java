@@ -1,4 +1,4 @@
-package com.hipo.model;
+package com.hipo.fragment.viewcontroller;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -2,7 +2,7 @@ package com.hipo.utils;
 
 import android.util.Log;
 
-import com.hipo.model.pojo.AddedListVo;
+import com.hipo.pojo.AddedListVo;
 
 /**
  * Created by dongjune on 2017-04-27.

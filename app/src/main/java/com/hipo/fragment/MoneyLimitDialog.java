@@ -14,15 +14,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.facebook.Profile;
 import com.hipo.lookie.R;
-import com.hipo.model.NetworkTask2;
-import com.hipo.utils.GetCategoryListThread;
-import com.hipo.utils.UpdateLimitValueThread;
+import com.hipo.model.GetCategoryListThread;
+import com.hipo.model.UpdateLimitValueThread;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

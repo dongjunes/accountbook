@@ -1,7 +1,7 @@
 package com.hipo.utils;
 
-import com.hipo.model.pojo.AddedListVo;
-import com.hipo.model.pojo.ListVo;
+import com.hipo.pojo.AddedListVo;
+import com.hipo.pojo.ListVo;
 
 /**
  * Created by dongjune on 2017-05-02.

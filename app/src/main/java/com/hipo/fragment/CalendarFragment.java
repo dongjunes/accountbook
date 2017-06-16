@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.hipo.callback.CalendarToDialog;
 import com.hipo.lookie.R;
-import com.hipo.model.GridViewAdapter;
+import com.hipo.fragment.viewcontroller.GridViewAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import butterknife.OnItemSelected;
-
-import static com.hipo.lookie.R.array.list_month;
 
 /**
  * A simple {@link Fragment} subclass.

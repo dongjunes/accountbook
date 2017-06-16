@@ -1,4 +1,4 @@
-package com.hipo.model.pojo;
+package com.hipo.pojo;
 
 public class ListVo {
     private String listId;
