@@ -514,7 +514,7 @@ public class ChartFragment extends Fragment implements OnChartValueSelectedListe
 
         //barChart.getXAxis().setEnabled(false);
         //barChart.getAxisLeft().setEnabled(false);
-        //barChart.getAxisRight().setEnabled(false);
+        barChart.getAxisRight().setEnabled(false);
 
     }
 
